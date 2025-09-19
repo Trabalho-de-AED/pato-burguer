@@ -1,38 +1,32 @@
-#include "clientes.h"
+#include "../include/clientes.h"
 #include <string.h>
 
-typedef struct {
-    int id;
-    char nome[50];
-    char preferencia[50];
-    int paciencia;
-    int MoedasDisponiveis;
-}tp_cliente;
-
-void CriarCliente(tp_cliente *cliente, int id, const char *nome, const char *preferencia, int paciencia, int moedas){
-    cliente->id = id;
-    strcpy(cliente->nome,nome);
-    strcpy(cliente->preferencia,preferencia);
-    cliente->paciencia = paciencia;
-    cliente->MoedasDisponiveis = moedas;
-}
-/*
-void GetnomeCliente(tp_cliente *cliente, char *nome){// função que retorna o nome do cliente
-    strcpy(nome, cliente->nome); 
-    return nome;
+Cliente criar_cliente(int id, const char* nome, int id_hamburguer_preferido, int paciencia, int moedas_disponiveis) {
+    Cliente c;
+    c.id = id;
+    strcpy(c.nome, nome);
+    c.id_hamburguer_preferido = id_hamburguer_preferido;
+    c.paciencia = paciencia;
+    c.moedas_disponiveis = moedas_disponiveis;
+    return c;
 }
 
-void GetprefCliente(tp_cliente *cliente, char *preferencia){
-    strcpy(preferencia, cliente->preferencia);
-    return preferencia;
+int cliente_get_id(const Cliente* cliente) {
+    return cliente->id;
 }
 
-void GetpaciCliente(tp_cliente *cliente, int *paciencia){
-    paciencia = cliente->paciencia;
-    return paciencia;
+const char* cliente_get_nome(const Cliente* cliente) {
+    return cliente->nome;
 }
 
-void dimPaciencia(tp_cliente *cliente){
-    cliente->paciencia--;
+int cliente_get_id_hamburguer_preferido(const Cliente* cliente) {
+    return cliente->id_hamburguer_preferido;
 }
-*/
+
+int cliente_get_paciencia(const Cliente* cliente) {
+    return cliente->paciencia;
+}
+
+int cliente_get_moedas_disponiveis(const Cliente* cliente) {
+    return cliente->moedas_disponiveis;
+}
