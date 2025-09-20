@@ -8,18 +8,18 @@ Ingrediente criar_ingrediente(
     float preco_compra,
     float valor,
     int tempo_preparo,
-    int nivel_desbloqueio,
-    int disponivel
+    int nivel_desbloqueio
 ) {
     Ingrediente ing;
     ing.id = id;
-    strcpy(c.nome, nome);
+    strncpy(ing.nome, nome, sizeof(ing.nome) - 1);
+    ing.nome[sizeof(ing.nome) - 1] = '\0';
     ing.quantidade = quantidade;
     ing.preco_compra = preco_compra;
     ing.valor = valor;
     ing.tempo_preparo = tempo_preparo;
     ing.nivel_desbloqueio = nivel_desbloqueio;
-    ing.disponivel = (quantidade > 0) ? 1 : 0; 
+    ing.disponivel = (quantidade > 0) ? 1 : 0;
 
     return ing;
 }

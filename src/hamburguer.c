@@ -4,12 +4,14 @@
 
 Hamburguer criar_hamburguer(int id, const char* nome, float preco_venda, int* ingredientes, int qtd_ingredientes) {
     Hamburguer h;
+    int i;
     h.id = id;
-    strcpy(c.nome, nome);
+    strncpy(h.nome, nome, sizeof(h.nome) - 1);
+    h.nome[sizeof(h.nome) - 1] = '\0';
     h.preco_venda = preco_venda;
     h.qtd_ingredientes = (qtd_ingredientes < MAX_INGREDIENTES) ? qtd_ingredientes : MAX_INGREDIENTES;
 
-    for (int i = 0; i < h.qtd_ingredientes; i++) {
+    for (i = 0; i < h.qtd_ingredientes; i++) {
         h.ingredientes[i] = ingredientes[i];
     }
 
