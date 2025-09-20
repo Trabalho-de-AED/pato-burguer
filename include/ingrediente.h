@@ -6,7 +6,7 @@ typedef struct {
     char nome[50];
     int quantidade;
     float preco_compra;
-    float valor 
+    float valor;
     int tempo_preparo;
     int nivel_desbloqueio;
     int disponivel;
