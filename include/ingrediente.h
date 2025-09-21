@@ -2,20 +2,33 @@
 #define INGREDIENTE_H
 
 typedef struct {
+    int id;
     char nome[50];
-    float valor;            // Moedas patonicas
-    int tempo_preparo;      // em segundos
-    int nivel_desbloqueio;  // fase em que aparece
-    int disponivel;         // 1 = sim, 0 = esgotado
+    int quantidade;
+    float preco_compra;
+    float valor;
+    int tempo_preparo;
+    int nivel_desbloqueio;
+    int disponivel;
 } Ingrediente;
 
-// Funções "públicas"
-Ingrediente criarIngrediente(
-    const char *nome,       // Nome do ingrediente
-    float valor,            // Valor do ingrediente em reais
-    int tempo_preparo,      // Tempo necessário para prepar em segundos
-    int nivel_desbloqueio,  // Fase do jogo em que o ingrediente se torna disponível
-    int disponivel          // Indica se o ingrediente está disponível
+Ingrediente criar_ingrediente(
+    int id,
+    const char* nome,
+    int quantidade,
+    float preco_compra,
+    float valor,
+    int tempo_preparo,
+    int nivel_desbloqueio
 );
+
+int ingrediente_get_id(const Ingrediente* ing);
+const char* ingrediente_get_nome(const Ingrediente* ing);
+int ingrediente_get_quantidade(const Ingrediente* ing);
+float ingrediente_get_preco_compra(const Ingrediente* ing);
+float ingrediente_get_valor(const Ingrediente* ing);
+int ingrediente_get_tempo_preparo(const Ingrediente* ing);
+int ingrediente_get_nivel_desbloqueio(const Ingrediente* ing);
+int ingrediente_get_disponivel(const Ingrediente* ing);
 
 #endif
