@@ -7,15 +7,15 @@ typedef void* tp_item;
 typedef struct{
     tp_item item[MAX];
     int topo; // Índice do topo da pilha (último elemento inserido)
-} tp_pilha;
+} Pilha;
 
 
-void inicializarPilha(tp_pilha *p);
-int pilhaVazia(tp_pilha *p);
-int pilhaCheia(tp_pilha *p);
-int empilhar(tp_pilha *p, tp_item e);
-int desempilhar(tp_pilha *p, tp_item *e);
-void imprimirPilha(tp_pilha p);
+void inicializarPilha(Pilha *p);
+int pilhaVazia(Pilha *p);
+int pilhaCheia(Pilha *p);
+int empilhar(Pilha *p, tp_item e);
+int desempilhar(Pilha *p, tp_item *e);
+void imprimirPilha(Pilha p);
 
 
 #endif// tp_item é definido como void* para permitir armazenar qualquer tipo de dado na pilha

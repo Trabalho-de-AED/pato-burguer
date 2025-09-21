@@ -1,24 +1,26 @@
-#ifndef clientes_h
-#define clientes_h
-
-
+#ifndef CLIENTES_H
+#define CLIENTES_H
 
 typedef struct {
     int id;
     char nome[50];
-    char preferencia[50];
+    int id_hamburguer_preferido;
     int paciencia;
-    int MoedasDisponiveis;
-}tp_cliente;
+    int moedas_disponiveis;
+} Cliente;
 
-void CriarCliente(tp_cliente *cliente, int id, const char *nome, const char *preferencia, int paciencia, int moedas);
-/*
-void GetnomeCliente(tp_cliente *cliente, char *nome);
-  
-void GetprefCliente(tp_cliente *cliente, char *preferencia);
+Cliente criar_cliente(
+    int id, 
+    const char* nome, 
+    int id_hamburguer_preferido, 
+    int paciencia, 
+    int moedas_disponiveis
+);
 
-void GetpaciCliente(tp_cliente *cliente, int *paciencia);
+int cliente_get_id(const Cliente* cliente);
+const char* cliente_get_nome(const Cliente* cliente);
+int cliente_get_id_hamburguer_preferido(const Cliente* cliente);
+int cliente_get_paciencia(const Cliente* cliente);
+int cliente_get_moedas_disponiveis(const Cliente* cliente);
 
-void dimPaciencia(tp_cliente *cliente);
-*/
 #endif
