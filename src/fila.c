@@ -13,7 +13,7 @@ void inicializaFila(Fila *f){
 // Uma fila está vazia quando não há nenhum elemento entre os índices ini e fim.
 // Como usamos uma fila circular, ini e fim são iguais quando não há elementos.
 // Retorna 1 se a fila estiver vazia, ou 0 se a fila não estiver vazia.
-int filaVazia(Fila *f){
+int filaVazia(const Fila *f){
     return (f->ini==f->fim);
 }
 
@@ -30,7 +30,7 @@ int proximo (int pos){
 // A função proximo(f->fim) calcula o próximo índice após o fim.
 // Se esse próximo índice for igual a ini, significa que a fila não pode receber mais elementos.
 // Retorna 1 se a fila estiver cheia, ou 0 se a fila não estiver cheia.
-int filaCheia(Fila *f){
+int filaCheia(const Fila *f){
     return (proximo(f->fim)==f->ini);
 }
 

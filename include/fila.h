@@ -19,11 +19,11 @@ void inicializaFila(Fila *f);
 
 // Verifica se a fila está vazia
 // Retorna 1 se estiver vazia, 0 caso contrário
-int filaVazia(Fila *f);
+int filaVazia(const Fila *f);
 
 // Verifica se a fila está cheia
 // Retorna 1 se estiver cheia, 0 caso contrário
-int filaCheia(Fila *f);
+int filaCheia(const Fila *f);
 
 // Insere um elemento na fila
 // Retorna 1 se a inserção for bem-sucedida, ou 0 se a fila estiver cheia
