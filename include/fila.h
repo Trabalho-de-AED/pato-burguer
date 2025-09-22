@@ -33,7 +33,4 @@ int insereFila(Fila *f, tp_item e);
 // Retorna 1 se a remoção for bem-sucedida, ou 0 se a fila estiver vazia
 int removeFila(Fila *f, tp_item *e);
 
-// Imprime todos os elementos da fila (passando por valor, a fila original não é alterada)
-void imprimeFila(Fila f);
-
 #endif
