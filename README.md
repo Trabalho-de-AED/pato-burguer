@@ -10,7 +10,7 @@ O objetivo do jogo é gerenciar pedidos de clientes, montar hambúrgueres de aco
 - Pedro Silva Ferreira
 - Pedro Prieto  
 - Atila Bezerra  
-- Yan Fiaz
+- Yan Fiais
 
 ## Funcionalidades da Primeira Entrega
 Até a primeira entrega, o projeto inclui:  
