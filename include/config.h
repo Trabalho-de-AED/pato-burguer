@@ -1,0 +1,10 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define MAX_HAMBURGUERS 12
+#define MAX_INGREDIENTES 10
+#define MAX_PEDIDOS 6
+#define MAX_COLUNAS_ESTOQUE 3
+#define ESPACAMENTO_COLUNAS 20
+
+#endif

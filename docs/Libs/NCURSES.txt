@@ -1,0 +1,49 @@
+Documentação: https://invisible-island.net/ncurses/man/ncurses.3x.html
+Para que serve: biblioteca para criar janelas, caixas, textos e receber teclado no terminal de forma estruturada.
+
+Funções usadas:
+1. initscr()
+Função: Inicializa o ambiente ncurses.
+O que faz: Prepara a tela do terminal para receber comandos de ncurses, configurando o modo de escrita, coordenadas e buffers.
+Uso: Deve ser chamada antes de qualquer outra função ncurses.
+
+============================================================
+2. noecho()
+Função: Desativa a exibição automática das teclas digitadas pelo usuário.
+O que faz: Normalmente, quando você digita algo no terminal, aparece na tela. Com noecho(), você controla manualmente o que será exibido.
+
+============================================================
+3.curs_set(FALSE)
+Função: Esconde o cursor do terminal.
+O que faz: Evita que o cursor piscando atrapalhe o visual do menu.
+
+============================================================
+4.keypad(stdscr, TRUE)
+Função: Habilita a leitura de teclas especiais (setas, F1–F12, HOME, etc.).
+O que faz: Sem isso, getch() só lê caracteres simples; com keypad, você consegue capturar setas e outras teclas do teclado.
+
+============================================================
+5.clear()
+Função: Limpa a tela inteira do terminal.
+O que faz: Remove todo o texto exibido até então, deixando a tela pronta para desenhar o novo conteúdo.
+
+============================================================
+6.mvprintw(y, x, "texto")
+Função: Move o local de impressão para a posição (y, x) e imprime texto.
+O que faz: Combina move(y, x) + printw("texto").
+
+============================================================
+7. refresh()
+Função: Atualiza a tela do terminal para mostrar todas as alterações feitas.
+O que faz: Ncurses trabalha com buffer de escrita, então você faz várias alterações na tela e só com refresh() elas aparecem de verdade.
+
+============================================================
+8. getch()
+Função: Lê uma tecla pressionada pelo usuário.
+O que faz: Bloqueia a execução até que o usuário pressione uma tecla e retorna o código dessa tecla.
+
+============================================================
+9. endwin()
+Função: Finaliza o modo ncurses.
+O que faz: Restaura o terminal ao modo normal, liberando a tela e cursor.
+Uso: Deve ser chamada no final do programa.
