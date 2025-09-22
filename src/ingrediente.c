@@ -1,28 +1,5 @@
-#ifndef INGREDIENTE_H
-#define INGREDIENTE_H
-
-/**
- * @file ingrediente.h
- * @brief Definição da estrutura de dados Ingrediente e suas operações.
- *
- * Este arquivo define a estrutura de um ingrediente, incluindo suas propriedades
- * como nome, quantidade, preço, valor e tempo de preparo, e funções para criar
- * e acessar essas propriedades.
- */
-
-/**
- * @brief Estrutura que representa um Ingrediente no jogo.
- */
-typedef struct {
-    int id; /**< Identificador único do ingrediente. */
-    char nome[50]; /**< Nome do ingrediente. */
-    int quantidade; /**< Quantidade atual do ingrediente em estoque. */
-    float preco_compra; /**< Preço de compra do ingrediente. */
-    float valor; /**< Valor do ingrediente (pode ser usado para cálculo de preço de venda). */
-    int tempo_preparo; /**< Tempo necessário para preparar o ingrediente. */
-    int nivel_desbloqueio; /**< Nível do jogo em que o ingrediente é desbloqueado. */
-    int disponivel; /**< Flag que indica se o ingrediente está disponível (1) ou não (0). */
-} Ingrediente;
+#include "../include/ingrediente.h"
+#include <string.h>
 
 /**
  * @brief Cria e inicializa uma nova estrutura Ingrediente.
@@ -43,62 +20,89 @@ Ingrediente criar_ingrediente(
     float valor,
     int tempo_preparo,
     int nivel_desbloqueio
-);
+) {
+    Ingrediente ing;
+    ing.id = id;
+    strncpy(ing.nome, nome, sizeof(ing.nome) - 1);
+    ing.nome[sizeof(ing.nome) - 1] = '\0';
+    ing.quantidade = quantidade;
+    ing.preco_compra = preco_compra;
+    ing.valor = valor;
+    ing.tempo_preparo = tempo_preparo;
+    ing.nivel_desbloqueio = nivel_desbloqueio;
+    ing.disponivel = (quantidade > 0) ? 1 : 0;
+
+    return ing;
+}
 
 /**
  * @brief Retorna o ID do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O ID do ingrediente.
  */
-int ingrediente_get_id(const Ingrediente* ing);
+int ingrediente_get_id(const Ingrediente* ing) {
+    return ing->id;
+}
 
 /**
  * @brief Retorna o nome do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O nome do ingrediente como uma string constante.
  */
-const char* ingrediente_get_nome(const Ingrediente* ing);
+const char* ingrediente_get_nome(const Ingrediente* ing) {
+    return ing->nome;
+}
 
 /**
  * @brief Retorna a quantidade do ingrediente em estoque.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return A quantidade do ingrediente.
  */
-int ingrediente_get_quantidade(const Ingrediente* ing);
+int ingrediente_get_quantidade(const Ingrediente* ing) {
+    return ing->quantidade;
+}
 
 /**
  * @brief Retorna o preço de compra do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O preço de compra do ingrediente.
  */
-float ingrediente_get_preco_compra(const Ingrediente* ing);
+float ingrediente_get_preco_compra(const Ingrediente* ing) {
+    return ing->preco_compra;
+}
 
 /**
  * @brief Retorna o valor do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O valor do ingrediente.
  */
-float ingrediente_get_valor(const Ingrediente* ing);
+float ingrediente_get_valor(const Ingrediente* ing) {
+    return ing->valor;
+}
 
 /**
  * @brief Retorna o tempo de preparo do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O tempo de preparo do ingrediente.
  */
-int ingrediente_get_tempo_preparo(const Ingrediente* ing);
+int ingrediente_get_tempo_preparo(const Ingrediente* ing) {
+    return ing->tempo_preparo;
+}
 
 /**
  * @brief Retorna o nível de desbloqueio do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return O nível de desbloqueio do ingrediente.
  */
-int ingrediente_get_nivel_desbloqueio(const Ingrediente* ing);
+int ingrediente_get_nivel_desbloqueio(const Ingrediente* ing) {
+    return ing->nivel_desbloqueio;
+}
 
 /**
  * @brief Retorna o status de disponibilidade do ingrediente.
  * @param ing Ponteiro constante para a estrutura Ingrediente.
  * @return 1 se o ingrediente estiver disponível, 0 caso contrário.
  */
-int ingrediente_get_disponivel(const Ingrediente* ing);
-
-#endif
+int ingrediente_get_disponivel(const Ingrediente* ing) {
+    return ing->disponivel;
+}
