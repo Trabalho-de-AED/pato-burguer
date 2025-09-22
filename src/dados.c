@@ -6,7 +6,6 @@ Ingrediente ingredientes[MAX_INGREDIENTES];
 Hamburguer cardapio[MAX_HAMBURGUERS];
 
 void inicializa_dados() {
-    // Ingredientes
     ingredientes[0] = criar_ingrediente(1,"Pao",50,1.0,2.0,1,1);
     ingredientes[1] = criar_ingrediente(2,"Carne",50,2.0,4.0,2,1);
     ingredientes[2] = criar_ingrediente(3,"Queijo",40,1.5,3.0,1,2);
@@ -18,7 +17,6 @@ void inicializa_dados() {
     ingredientes[8] = criar_ingrediente(9,"Cebola",20,0.3,0.8,1,2);
     ingredientes[9] = criar_ingrediente(10,"Pepperoni",15,1.0,2.5,1,3);
 
-    // Cardápio
     int ids1[] = {1,2,6};
     int ids2[] = {1,2,3};
     int ids3[] = {1,2,3,6};
