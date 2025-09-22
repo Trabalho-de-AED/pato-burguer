@@ -1,5 +1,5 @@
-#include "common/fila.h" //Inclui a definição da struct tp_fiila e o tipo tp_item
-#include <stdio.h> // Inclui a biblioteca que permite usar o printf na função imprimeFila
+#include "../include/fila.h" 
+#include <stdio.h> 
 
 // Inicializa a fila circular, preparando-a para uso
 // Ao inicializar, definimos ini e fim como MAX-1, indicando que a fila está vazia.
@@ -41,17 +41,6 @@ int removeFila (Fila *f, tp_item *e){
     f->ini = proximo(f->ini); // Na fila, quando removemos um elemento o ini avança para a próxima posição da fila.
     *e = f-> item[f->ini]; // Armazena na variável apontada por e o elemento removido da fila.
     return 1;
-}
-
-// Imprime todos os elementos da fila.
-// Atenção: a fila é passada por cópia valor, então a original não é alterada.
-// A função remove os elementos temporariamente da cópia da fila e os imprime.
-void imprimeFila(Fila f){
-    tp_item e;
-    while(!filaVazia(&f)){
-        removeFila(&f, &e);
-        printf("\n%d", e);
-    }
 }
 
 // Insere um elemento na fila circular.

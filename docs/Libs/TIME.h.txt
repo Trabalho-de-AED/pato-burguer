@@ -1,0 +1,2 @@
+é uma biblioteca padrão da linguagem C que fornece funções para trabalhar com tempo e data.
+A time.h serve aqui principalmente para gerar números aleatórios diferentes a cada execução do jogo. Sem ela, os hambúrgueres e pedidos seriam sempre iguais.
