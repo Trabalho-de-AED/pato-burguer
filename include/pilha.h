@@ -2,13 +2,13 @@
 #define PILHA_H
 
 typedef struct {
-    int dados[50];  // exemplo
+    int dados[50];
     int topo;
 } Pilha;
 
-void inicializarPilha(Pilha *p); // inicializa
+void inicializarPilha(Pilha *p);
 void push(Pilha *p, int valor);
 int pop(Pilha *p, int *valor);
-int tamanho(Pilha *p);
+int tamanho(const Pilha *p);
 
 #endif

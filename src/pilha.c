@@ -18,6 +18,6 @@ int pop(Pilha *p, int *valor) {
     return 0;
 }
 
-int tamanho(Pilha *p) {
+int tamanho(const Pilha *p) {
     return p->topo;
 }
