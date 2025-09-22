@@ -11,16 +11,24 @@
 #include "ui.h"
 #include "gerenciador_pedido.h"
 
+/**
+ * @brief Define o número máximo de pedidos que podem ser gerados ou gerenciados.
+ */
 #define MAX_PEDIDOS 6
 
+/**
+ * @brief Função principal do programa Pato Burguer.
+ *        Inicializa o jogo, gerencia o loop principal e interage com o usuário.
+ * @return 0 se o programa for encerrado com sucesso.
+ */
 int main() {
 
     srand(time(NULL));
 
     inicializa_dados();
 
-    Pedido pedidos[MAX_PEDIDOS];
-    pedido_manager_inicializar_pedidos();
+    Pedido pedidos[MAX_PEDIDOS]; 
+    pedido_manager_inicializar_pedidos(); 
     pedido_manager_gerar_pedidos(pedidos, MAX_PEDIDOS);
 
     char ch;
@@ -30,15 +38,15 @@ int main() {
         ui_limpar_tela();
         ui_mostrar_status();
         ui_mostrar_pedidos(&filaPedidos);
-        ui_mostrar_estoque(ingredientes, MAX_INGREDIENTES);
+        ui_mostrar_estoque(ingredientes, MAX_INGREDIENTES); 
         ui_mostrar_cardapio(cardapio, MAX_HAMBURGUERS, ingredientes, MAX_INGREDIENTES);
         ui_mostrar_ajuda();
 
-        ch = ui_obter_comando();
+        ch = ui_obter_comando(); 
 
         switch(ch) {
 
-            case 'p': {
+            case 'p': { 
                 int pedido_id = pedido_manager_processar_proximo_pedido();
                 if (pedido_id > 0) {
                     ui_mensagem_preparando_pedido(pedido_id);
@@ -54,10 +62,10 @@ int main() {
                 pedido_manager_gerar_pedidos(pedidos, MAX_PEDIDOS);
                 ui_pressionar_enter_para_continuar();
                 break;
-            case 'q':
+            case 'q': 
                 ui_mensagem_saindo();
                 break;
-            default:
+            default: 
                 ui_mensagem_comando_invalido();
                 ui_pressionar_enter_para_continuar();
         }

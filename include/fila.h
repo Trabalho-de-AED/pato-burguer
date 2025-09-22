@@ -1,36 +1,67 @@
 #ifndef FILA_H
 #define FILA_H
-#define MAX 100 // Tamanho máximo da fila
 
-// tp_item é definido como void* para permitir armazenar qualquer tipo de dado na fila
+/**
+ * @file fila.h
+ * @brief Definição da estrutura de dados Fila (fila circular) e suas operações.
+ *
+ * Este arquivo define uma fila genérica que pode armazenar ponteiros para qualquer tipo de dado.
+ * A implementação é de uma fila circular com tamanho máximo pré-definido.
+ */
+
+/**
+ * @brief Tamanho máximo da fila. Define a capacidade máxima de elementos que a fila pode armazenar.
+ */
+#define MAX 100
+
+/**
+ * @brief Tipo de item da fila. Definido como `void*` para permitir que a fila armazene ponteiros para qualquer tipo de dado.
+ */
 typedef void* tp_item; 
 
-// Estrutura da fila circular
+/**
+ * @brief Estrutura que representa uma fila circular.
+ */
 typedef struct {
-    tp_item item[MAX];  // Array que armazena os elementos da fila
-    int ini, fim;       // Índice do início da fila (primeiro elemento a ser removido)
-} Fila;              // Índice do final da fila (último elemento inserido)
+    tp_item item[MAX];  /**< Array que armazena os elementos da fila. */
+    int ini, fim;       /**< Índice do início da fila (primeiro elemento a ser removido) e do final da fila (último elemento inserido). */
+} Fila;
 
-
-// Funções da fila circular
-
-// Inicializa a fila, preparando-a para uso
+/**
+ * @brief Inicializa a fila, preparando-a para uso.
+ *        Define os índices de início e fim para indicar que a fila está vazia.
+ * @param f Ponteiro para a estrutura Fila a ser inicializada.
+ */
 void inicializaFila(Fila *f);
 
-// Verifica se a fila está vazia
-// Retorna 1 se estiver vazia, 0 caso contrário
+/**
+ * @brief Verifica se a fila está vazia.
+ * @param f Ponteiro constante para a estrutura Fila a ser verificada.
+ * @return 1 se a fila estiver vazia, 0 caso contrário.
+ */
 int filaVazia(const Fila *f);
 
-// Verifica se a fila está cheia
-// Retorna 1 se estiver cheia, 0 caso contrário
+/**
+ * @brief Verifica se a fila está cheia.
+ * @param f Ponteiro constante para a estrutura Fila a ser verificada.
+ * @return 1 se a fila estiver cheia, 0 caso contrário.
+ */
 int filaCheia(const Fila *f);
 
-// Insere um elemento na fila
-// Retorna 1 se a inserção for bem-sucedida, ou 0 se a fila estiver cheia
+/**
+ * @brief Insere um elemento na fila.
+ * @param f Ponteiro para a estrutura Fila onde o elemento será inserido.
+ * @param e O elemento (ponteiro `tp_item`) a ser inserido.
+ * @return 1 se a inserção for bem-sucedida, ou 0 se a fila estiver cheia.
+ */
 int insereFila(Fila *f, tp_item e);
 
-// Remove um elemento da fila
-// Retorna 1 se a remoção for bem-sucedida, ou 0 se a fila estiver vazia
+/**
+ * @brief Remove um elemento da fila.
+ * @param f Ponteiro para a estrutura Fila de onde o elemento será removido.
+ * @param e Ponteiro para `tp_item` onde o elemento removido será armazenado.
+ * @return 1 se a remoção for bem-sucedida, ou 0 se a fila estiver vazia.
+ */
 int removeFila(Fila *f, tp_item *e);
 
 #endif

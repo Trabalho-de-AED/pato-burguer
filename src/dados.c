@@ -2,9 +2,23 @@
 #include "config.h"
 #include <stdlib.h>
 
+/**
+ * @brief Array global de ingredientes disponíveis no jogo.
+ *        Contém todos os ingredientes com suas propriedades e quantidades iniciais.
+ */
 Ingrediente ingredientes[MAX_INGREDIENTES];
+
+/**
+ * @brief Array global de hambúrgueres disponíveis no cardápio.
+ *        Contém todos os hambúrgueres com suas receitas e preços.
+ */
 Hamburguer cardapio[MAX_HAMBURGUERS];
 
+/**
+ * @brief Inicializa todos os dados do jogo, incluindo ingredientes e cardápio.
+ *        Esta função deve ser chamada uma vez no início do programa para popular
+ *        as estruturas de dados globais com valores pré-definidos.
+ */
 void inicializa_dados() {
     ingredientes[0] = criar_ingrediente(1,"Pao",50,1.0,2.0,1,1);
     ingredientes[1] = criar_ingrediente(2,"Carne",50,2.0,4.0,2,1);
