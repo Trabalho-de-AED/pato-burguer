@@ -63,7 +63,7 @@ void ui_mostrar_estoque(const Ingrediente ingredientes[], int num_ingredientes) 
         if ((i + 1) % 3 == 0) printf("\n");
     }
 
-    printf("\n.....................\n\n");
+    printf("\n............................\n\n");
 }
 
 void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const Ingrediente ingredientes[], int num_ingredientes) {
