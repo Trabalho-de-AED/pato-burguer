@@ -12,7 +12,7 @@ PilhaIngredientes* criar_pilha_ingredientes() {
 void empilhar_ingrediente(PilhaIngredientes* pilha, Ingrediente ingrediente) {
     NoPilhaIngrediente* novo_no = (NoPilhaIngrediente*) malloc(sizeof(NoPilhaIngrediente));
     if (novo_no == NULL) {
-        return; // Falha na alocação
+        return; 
     }
     novo_no->ingrediente = ingrediente;
     novo_no->proximo = pilha->topo;
@@ -21,7 +21,7 @@ void empilhar_ingrediente(PilhaIngredientes* pilha, Ingrediente ingrediente) {
 
 int desempilhar_ingrediente(PilhaIngredientes* pilha, Ingrediente* ingrediente_removido) {
     if (pilha == NULL || pilha->topo == NULL) {
-        return 0; // Pilha vazia
+        return 0; 
     }
     NoPilhaIngrediente* no_removido = pilha->topo;
     *ingrediente_removido = no_removido->ingrediente;
@@ -33,8 +33,8 @@ int desempilhar_ingrediente(PilhaIngredientes* pilha, Ingrediente* ingrediente_r
 void destruir_pilha_ingredientes(PilhaIngredientes* pilha) {
     if (pilha == NULL) return;
     Ingrediente ing_temp;
-    while (desempilhar_ingrediente(pilha, &ing_temp)); // Esvazia a pilha, liberando os nós
-    free(pilha); // Libera a estrutura da pilha em si
+    while (desempilhar_ingrediente(pilha, &ing_temp)); 
+    free(pilha); 
 }
 
 PilhaIngredientes* duplicar_pilha_ingredientes(const PilhaIngredientes* original) {
@@ -44,15 +44,15 @@ PilhaIngredientes* duplicar_pilha_ingredientes(const PilhaIngredientes* original
     if (nova_pilha == NULL) return NULL;
 
     NoPilhaIngrediente* atual = original->topo;
-    PilhaIngredientes* pilha_temp = criar_pilha_ingredientes(); // Pilha auxiliar para manter a ordem
+    PilhaIngredientes* pilha_temp = criar_pilha_ingredientes(); 
 
-    // Copia para a pilha temporária (inverte a ordem)
+    
     while (atual != NULL) {
         empilhar_ingrediente(pilha_temp, atual->ingrediente);
         atual = atual->proximo;
     }
 
-    // Copia da pilha temporária para a nova pilha (restaura a ordem original)
+    
     Ingrediente ing_temp;
     while (desempilhar_ingrediente(pilha_temp, &ing_temp)) {
         empilhar_ingrediente(nova_pilha, ing_temp);

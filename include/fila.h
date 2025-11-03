@@ -23,8 +23,8 @@ typedef void* tp_item;
  * @brief Estrutura que representa uma fila circular.
  */
 typedef struct {
-    tp_item item[MAX];  /**< Array que armazena os elementos da fila. */
-    int ini, fim;       /**< Índice do início da fila (primeiro elemento a ser removido) e do final da fila (último elemento inserido). */
+    tp_item item[MAX];  
+    int ini, fim;       
 } Fila;
 
 /**

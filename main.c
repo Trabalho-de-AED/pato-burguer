@@ -18,19 +18,19 @@ int main() {
 
     srand(time(NULL));
 
-    // Inicialização dos módulos
+    
     inicializar_caixa();
     inicializa_dados();
     pedido_manager_inicializar_pedidos();
 
-    // Gerar a fila inicial de clientes para o dia
+    
     FilaClientes* fila_de_clientes = criar_fila_clientes();
     gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA);
 
     char ch;
 
     do {
-        // Renderização da UI a cada ciclo
+        
         ui_limpar_tela();
         ui_mostrar_status();
         ui_mostrar_fila_clientes(fila_de_clientes);
@@ -43,11 +43,11 @@ int main() {
 
         switch(ch) {
 
-            case 'c': { // Atender próximo cliente da fila
+            case 'c': { 
                 Cliente cliente_atendido;
                 if (desenfileirar_cliente(fila_de_clientes, &cliente_atendido)) {
                     cliente_faz_pedido(&cliente_atendido);
-                    // Idealmente, teríamos uma função em ui.c para isso
+                    
                     printf("\nCliente %s atendido! Pedido (H%d) enviado para a cozinha.\n", 
                            cliente_get_nome(&cliente_atendido), 
                            cliente_get_id_hamburguer_preferido(&cliente_atendido));
@@ -58,7 +58,7 @@ int main() {
                 break;
             }
 
-            case 'p': { // Preparar próximo pedido da cozinha
+            case 'p': { 
                 int pedido_id = pedido_manager_processar_proximo_pedido();
                 if (pedido_id > 0) {
                     ui_mensagem_preparando_pedido(pedido_id);
@@ -69,7 +69,7 @@ int main() {
                 break;
             }
 
-            case 'l': { // Ir para a loja
+            case 'l': { 
                 int id_compra, qtd_compra;
                 do {
                     ui_mostrar_loja(&loja_de_ingredientes, get_saldo_caixa());
@@ -94,12 +94,12 @@ int main() {
 
     } while(ch != 'q');
 
-    // Limpeza de memória
+    
     if (fila_de_clientes != NULL) {
         destruir_fila_clientes(fila_de_clientes);
     }
     destruir_loja(&loja_de_ingredientes);
-    // TODO: Adicionar limpeza da fila de pedidos se ela contiver ponteiros alocados
+    
 
     return 0;
 }

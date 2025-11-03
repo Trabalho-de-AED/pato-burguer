@@ -12,7 +12,7 @@
 #include "pilha_ingredientes.h"
 #include "caixa.h"
 
-// Contador estático para garantir IDs de pedido únicos
+
 static int proximo_id_pedido = 1;
 
 Fila filaPedidos;
@@ -72,7 +72,7 @@ static int contar_erros_montagem(PilhaIngredientes* pilha_jogador, const Hamburg
     PilhaIngredientes* pilha_receita = criar_pilha_ingredientes();
     Pilha* pilha_gabarito_copia = pilha_duplicar(&hamburguer_gabarito->ingredientes);
 
-    // Converte a pilha de IDs da receita (estática) para uma pilha de Ingredientes (dinâmica)
+    
     int id_ing;
     while (pop(pilha_gabarito_copia, &id_ing)) {
         Ingrediente* ing = buscar_ingrediente_por_id(id_ing);
@@ -80,12 +80,12 @@ static int contar_erros_montagem(PilhaIngredientes* pilha_jogador, const Hamburg
             empilhar_ingrediente(pilha_receita, *ing);
         }
     }
-    free(pilha_gabarito_copia); // Libera a cópia da pilha de IDs
+    free(pilha_gabarito_copia); 
 
     int erros = 0;
     Ingrediente ing_jogador, ing_receita;
 
-    // Compara as duas pilhas
+    
     while (!pilha_ingredientes_vazia(pilha_jogador) && !pilha_ingredientes_vazia(pilha_receita)) {
         desempilhar_ingrediente(pilha_jogador, &ing_jogador);
         desempilhar_ingrediente(pilha_receita, &ing_receita);
@@ -94,7 +94,7 @@ static int contar_erros_montagem(PilhaIngredientes* pilha_jogador, const Hamburg
         }
     }
 
-    // Conta ingredientes restantes em qualquer uma das pilhas como erro
+    
     erros += pilha_ingredientes_tamanho(pilha_jogador);
     erros += pilha_ingredientes_tamanho(pilha_receita);
 
@@ -166,11 +166,11 @@ int pedido_manager_processar_proximo_pedido() {
 
 
         int id_processado = pedido_get_id(pedido_atual);
-        // Não liberar o pedido_atual aqui se você for armazená-lo em outra lista (e.g., pedidos prontos)
-        // free(pedido_atual); 
+        
+        
 
         return id_processado;
     }
-    return 0; // Fila de pedidos vazia
+    return 0; 
 }
 

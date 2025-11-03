@@ -174,9 +174,9 @@ void ui_mostrar_ajuda() {
 
 void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito) {
     ui_limpar_tela();
-    printf("========================================\n");
-    printf("==     TELA DE MONTAGEM DE PEDIDO     ==\n");
-    printf("========================================\n\n");
+    printf("........................................\n");
+    printf("..     TELA DE MONTAGEM DE PEDIDO     ..\n");
+    printf("........................................\n\n");
     printf("HAMBURGUER A SER MONTADO: %s\n\n", hamburguer_get_nome(hamburguer_gabarito));
     printf("RECEITA (Ingredientes Necessários):\n");
 
@@ -235,7 +235,7 @@ void ui_pressionar_enter_para_continuar() {
  * @param id O ID do pedido que está sendo preparado.
  */
 void ui_mensagem_preparando_pedido(int id) {
-    // Esta mensagem pode ser removida ou adaptada, pois agora entramos na tela de montagem
+    
 }
 
 /**

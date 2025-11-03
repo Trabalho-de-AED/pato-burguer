@@ -1,7 +1,7 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
 
-// Declaração avançada para resolver dependência circular com fila_clientes.h
+
 struct FilaClientes;
 
 /**

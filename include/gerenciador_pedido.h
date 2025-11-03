@@ -6,7 +6,7 @@
 #include "hamburguer.h"
 #include "ingrediente.h"
 #include "config.h"
-#include "clientes.h" // Adicionado para ter a definição de Cliente
+#include "clientes.h" 
 
 /**
  * @brief Fila global que armazena os pedidos do sistema.

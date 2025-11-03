@@ -66,4 +66,4 @@ int pilha_ingredientes_vazia(const PilhaIngredientes* pilha);
  */
 int pilha_ingredientes_tamanho(const PilhaIngredientes* pilha);
 
-#endif // PILHA_INGREDIENTES_H
+#endif 

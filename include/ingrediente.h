@@ -14,14 +14,14 @@
  * @brief Estrutura que representa um Ingrediente no jogo.
  */
 typedef struct {
-    int id; /**< Identificador único do ingrediente. */
-    char nome[50]; /**< Nome do ingrediente. */
-    int quantidade; /**< Quantidade atual do ingrediente em estoque. */
-    float preco_compra; /**< Preço de compra do ingrediente. */
-    float valor; /**< Valor do ingrediente (pode ser usado para cálculo de preço de venda). */
-    int tempo_preparo; /**< Tempo necessário para preparar o ingrediente. */
-    int nivel_desbloqueio; /**< Nível do jogo em que o ingrediente é desbloqueado. */
-    int disponivel; /**< Flag que indica se o ingrediente está disponível (1) ou não (0). */
+    int id; 
+    char nome[50]; 
+    int quantidade; 
+    float preco_compra; 
+    float valor; 
+    int tempo_preparo; 
+    int nivel_desbloqueio; 
+    int disponivel; 
 } Ingrediente;
 
 /**

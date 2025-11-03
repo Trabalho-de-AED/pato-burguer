@@ -38,13 +38,18 @@ void inicializa_dados() {
     ingredientes[8] = criar_ingrediente(9,"Cebola",20,0.3,0.8,1,2);
     ingredientes[9] = criar_ingrediente(10,"Pepperoni",15,1.0,2.5,1,3);
 
-    // Inicializa a loja
+    
     inicializar_loja(&loja_de_ingredientes);
     adicionar_ingrediente_loja(&loja_de_ingredientes, 1, "Pao", 0.5, 100);
     adicionar_ingrediente_loja(&loja_de_ingredientes, 2, "Carne", 1.5, 50);
     adicionar_ingrediente_loja(&loja_de_ingredientes, 3, "Queijo", 1.0, 40);
     adicionar_ingrediente_loja(&loja_de_ingredientes, 4, "Alface", 0.2, 80);
     adicionar_ingrediente_loja(&loja_de_ingredientes, 5, "Molho", 0.1, 60);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 6, "Bacon", 1.5, 30);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 7, "Tomate", 0.5, 25);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 8, "Ovo", 0.7, 20);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 9, "Cebola", 0.3, 20);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 10, "Pepperoni", 1.0, 15);
 
     int ids1[] = {1,2,6};
     int ids2[] = {1,2,3};

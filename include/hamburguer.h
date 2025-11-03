@@ -20,10 +20,10 @@
  * @brief Estrutura que representa um Hambúrguer no cardápio.
  */
 typedef struct {
-    int id; /**< Identificador único do hambúrguer. */
-    char nome[50]; /**< Nome do hambúrguer. */
-    float preco_venda; /**< Preço de venda do hambúrguer. */
-    Pilha ingredientes; /**< Pilha de IDs de ingredientes que compõem o hambúrguer. */
+    int id; 
+    char nome[50]; 
+    float preco_venda; 
+    Pilha ingredientes; 
 } Hamburguer;
 
 /**

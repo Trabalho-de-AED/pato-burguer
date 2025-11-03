@@ -15,8 +15,8 @@
  *        Os dados são armazenados em um array de tamanho fixo.
  */
 typedef struct {
-    int dados[50];  /**< Array que armazena os elementos da pilha. */
-    int topo;       /**< Índice do topo da pilha. */
+    int dados[50];  
+    int topo;       
 } Pilha;
 
 /**
