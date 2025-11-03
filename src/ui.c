@@ -5,6 +5,7 @@
 #include "pedido.h"
 #include "pilha.h"
 #include "clientes.h"
+#include "dados.h"
 
 /**
  * @brief Limpa a tela do console.
@@ -144,11 +145,41 @@ void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const
 void ui_mostrar_ajuda() {
     printf("....... JOGO .......\n\n");
     printf("Comandos:\n");
-    printf("  'c' - Gerar nova fila de clientes\n");
+    printf("  'c' - Atender proximo cliente\n");
     printf("  'p' - Preparar proximo pedido\n");
-    printf("  'r' - Gerar novos pedidos de teste\n");
     printf("  'q' - Sair do jogo\n\n");
     printf(".....................\n\n");
+}
+
+void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito) {
+    ui_limpar_tela();
+    printf("========================================\n");
+    printf("==     TELA DE MONTAGEM DE PEDIDO     ==\n");
+    printf("========================================\n\n");
+    printf("HAMBURGUER A SER MONTADO: %s\n\n", hamburguer_get_nome(hamburguer_gabarito));
+    printf("RECEITA (Ingredientes Necessários):\n");
+
+    Pilha copia_receita = hamburguer_gabarito->ingredientes;
+    int ing_id;
+    while(pop(&copia_receita, &ing_id)) {
+        Ingrediente* ing = buscar_ingrediente_por_id(ing_id);
+        if (ing != NULL) {
+            printf("  ID: %d - %s\n", ingrediente_get_id(ing), ingrediente_get_nome(ing));
+        }
+    }
+    printf("\n----------------------------------------\n");
+    printf("Digite o ID do ingrediente para adicionar à pilha.\n");
+    printf("Digite '0' para finalizar a montagem.\n");
+    printf("----------------------------------------\n");
+}
+
+void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador) {
+    printf("\n--- SEU HAMBURGUER MONTADO ---\n");
+    Ingrediente ing_temp;
+    while (desempilhar_ingrediente(pilha_jogador, &ing_temp)) {
+        printf("  - %s\n", ingrediente_get_nome(&ing_temp));
+    }
+    printf("--------------------------------------------------\n");
 }
 
 /**
@@ -160,6 +191,13 @@ char ui_obter_comando() {
     printf("Digite um comando: ");
     scanf(" %c", &ch);
     return ch;
+}
+
+int ui_obter_id_ingrediente() {
+    int id;
+    printf("> Digite o ID do ingrediente: ");
+    scanf("%d", &id);
+    return id;
 }
 
 /**
@@ -176,14 +214,14 @@ void ui_pressionar_enter_para_continuar() {
  * @param id O ID do pedido que está sendo preparado.
  */
 void ui_mensagem_preparando_pedido(int id) {
-    printf("\nPedido #%d em preparo!\n", id);
+    // Esta mensagem pode ser removida ou adaptada, pois agora entramos na tela de montagem
 }
 
 /**
  * @brief Exibe uma mensagem informando que não há pedidos na fila.
  */
 void ui_mensagem_sem_pedidos() {
-    printf("\nNao ha pedidos na fila!\n");
+    printf("\nNao ha pedidos na fila para preparar!\n");
 }
 
 /**
@@ -205,6 +243,10 @@ void ui_mensagem_gerando_pedidos() {
  */
 void ui_mensagem_comando_invalido() {
     printf("\nComando nao reconhecido.\n");
+}
+
+void ui_mensagem_id_invalido() {
+    printf("\nID de ingrediente invalido ou nao encontrado na receita! Tente novamente.\n");
 }
 
 /**

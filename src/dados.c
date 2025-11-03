@@ -57,3 +57,21 @@ void inicializa_dados() {
     cardapio[10] = criar_hamburguer(11,"Bacon Egg Duck",17.0,ids11,4);
     cardapio[11] = criar_hamburguer(12,"Pato Especial",22.0,ids12,10);
 }
+
+Hamburguer* buscar_hamburguer_por_id(int id) {
+    for (int i = 0; i < MAX_HAMBURGUERS; i++) {
+        if (hamburguer_get_id(&cardapio[i]) == id) {
+            return &cardapio[i];
+        }
+    }
+    return NULL;
+}
+
+Ingrediente* buscar_ingrediente_por_id(int id) {
+    for (int i = 0; i < MAX_INGREDIENTES; i++) {
+        if (ingrediente_get_id(&ingredientes[i]) == id) {
+            return &ingredientes[i];
+        }
+    }
+    return NULL;
+}

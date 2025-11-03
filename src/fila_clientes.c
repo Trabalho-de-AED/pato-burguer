@@ -27,6 +27,24 @@ void enfileirar_cliente(FilaClientes* fila, Cliente cliente) {
     fila->fim = novo_no;
 }
 
+int desenfileirar_cliente(FilaClientes* fila, Cliente* cliente_removido) {
+    if (fila_clientes_vazia(fila)) {
+        return 0; // Fila vazia
+    }
+
+    NoCliente* no_removido = fila->inicio;
+    *cliente_removido = no_removido->cliente;
+
+    fila->inicio = fila->inicio->proximo;
+
+    if (fila->inicio == NULL) { // Se a fila ficou vazia
+        fila->fim = NULL;
+    }
+
+    free(no_removido);
+    return 1; // Sucesso
+}
+
 int fila_clientes_vazia(const FilaClientes* fila) {
     return (fila == NULL || fila->inicio == NULL);
 }

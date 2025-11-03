@@ -4,7 +4,8 @@
 #include "fila.h"
 #include "hamburguer.h"
 #include "ingrediente.h"
-#include "fila_clientes.h" // Dependência para FilaClientes
+#include "fila_clientes.h"
+#include "pilha_ingredientes.h"
 
 /**
  * @brief Limpa a tela do console.
@@ -51,10 +52,28 @@ void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const
 void ui_mostrar_ajuda();
 
 /**
+ * @brief Exibe a tela de montagem de um hambúrguer, mostrando a receita.
+ * @param hamburguer_gabarito Ponteiro para o hambúrguer que serve como receita.
+ */
+void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito);
+
+/**
+ * @brief Exibe o hambúrguer montado pelo jogador.
+ * @param pilha_jogador A pilha de ingredientes montada pelo jogador.
+ */
+void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador);
+
+/**
  * @brief Obtém um comando de caractere do usuário.
  * @return O caractere digitado pelo usuário.
  */
 char ui_obter_comando();
+
+/**
+ * @brief Obtém a escolha numérica de um ingrediente do jogador.
+ * @return O ID do ingrediente escolhido.
+ */
+int ui_obter_id_ingrediente();
 
 /**
  * @brief Pausa a execução e aguarda o usuário pressionar Enter para continuar.
@@ -86,6 +105,11 @@ void ui_mensagem_gerando_pedidos();
  * @brief Exibe uma mensagem de erro para um comando não reconhecido.
  */
 void ui_mensagem_comando_invalido();
+
+/**
+ * @brief Exibe uma mensagem de erro para um ID de ingrediente inválido.
+ */
+void ui_mensagem_id_invalido();
 
 /**
  * @brief Exibe uma mensagem de despedida ao sair do jogo.

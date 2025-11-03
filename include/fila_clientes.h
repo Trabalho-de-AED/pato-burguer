@@ -33,6 +33,14 @@ FilaClientes* criar_fila_clientes();
 void enfileirar_cliente(FilaClientes* fila, Cliente cliente);
 
 /**
+ * @brief Remove um cliente do início da fila.
+ * @param fila Ponteiro para a fila de clientes.
+ * @param cliente_removido Ponteiro para uma struct Cliente onde os dados do cliente removido serão copiados.
+ * @return 1 se a remoção for bem-sucedida, 0 se a fila estiver vazia.
+ */
+int desenfileirar_cliente(FilaClientes* fila, Cliente* cliente_removido);
+
+/**
  * @brief Verifica se a fila de clientes está vazia.
  * @param fila Ponteiro para a fila de clientes.
  * @return 1 se a fila estiver vazia, 0 caso contrário.

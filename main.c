@@ -10,38 +10,29 @@
 #include "dados.h"
 #include "ui.h"
 #include "gerenciador_pedido.h"
-#include "fila_clientes.h" // Incluir o novo cabeçalho
+#include "fila_clientes.h"
 
-/**
- * @brief Define o número máximo de pedidos que podem ser gerados ou gerenciados.
- */
-#define MAX_PEDIDOS 6
-#define CLIENTES_POR_DIA 10 // Definir a quantidade de clientes por dia
+#define CLIENTES_POR_DIA 10
 
-/**
- * @brief Função principal do programa Pato Burguer.
- *        Inicializa o jogo, gerencia o loop principal e interage com o usuário.
- * @return 0 se o programa for encerrado com sucesso.
- */
 int main() {
 
     srand(time(NULL));
 
+    // Inicialização dos módulos
     inicializa_dados();
+    pedido_manager_inicializar_pedidos();
 
-    FilaClientes* fila_de_clientes = NULL; // 1. Inicializar como NULL
-
-    Pedido pedidos[MAX_PEDIDOS]; 
-    pedido_manager_inicializar_pedidos(); 
-    pedido_manager_gerar_pedidos(pedidos, MAX_PEDIDOS);
+    // Gerar a fila inicial de clientes para o dia
+    FilaClientes* fila_de_clientes = criar_fila_clientes();
+    gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA);
 
     char ch;
 
     do {
-
+        // Renderização da UI a cada ciclo
         ui_limpar_tela();
         ui_mostrar_status();
-        ui_mostrar_fila_clientes(fila_de_clientes); // 2. Mover exibição para o loop principal
+        ui_mostrar_fila_clientes(fila_de_clientes);
         ui_mostrar_pedidos(&filaPedidos);
         ui_mostrar_estoque(ingredientes, MAX_INGREDIENTES); 
         ui_mostrar_cardapio(cardapio, MAX_HAMBURGUERS, ingredientes, MAX_INGREDIENTES);
@@ -51,17 +42,22 @@ int main() {
 
         switch(ch) {
 
-            case 'c': // 3. Adicionar novo case para gerar clientes
-                ui_mensagem_gerando_clientes();
-                if (fila_de_clientes != NULL) {
-                    destruir_fila_clientes(fila_de_clientes);
+            case 'c': { // Atender próximo cliente da fila
+                Cliente cliente_atendido;
+                if (desenfileirar_cliente(fila_de_clientes, &cliente_atendido)) {
+                    cliente_faz_pedido(&cliente_atendido);
+                    // Idealmente, teríamos uma função em ui.c para isso
+                    printf("\nCliente %s atendido! Pedido (H%d) enviado para a cozinha.\n", 
+                           cliente_get_nome(&cliente_atendido), 
+                           cliente_get_id_hamburguer_preferido(&cliente_atendido));
+                } else {
+                    printf("\nNao ha mais clientes na fila para atender.\n");
                 }
-                fila_de_clientes = criar_fila_clientes();
-                gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA);
                 ui_pressionar_enter_para_continuar();
                 break;
+            }
 
-            case 'p': { 
+            case 'p': { // Preparar próximo pedido da cozinha
                 int pedido_id = pedido_manager_processar_proximo_pedido();
                 if (pedido_id > 0) {
                     ui_mensagem_preparando_pedido(pedido_id);
@@ -71,15 +67,11 @@ int main() {
                 ui_pressionar_enter_para_continuar();
                 break;
             }
-            case 'r':
-                ui_mensagem_gerando_pedidos();
-                pedido_manager_inicializar_pedidos(); 
-                pedido_manager_gerar_pedidos(pedidos, MAX_PEDIDOS);
-                ui_pressionar_enter_para_continuar();
-                break;
+
             case 'q': 
                 ui_mensagem_saindo();
                 break;
+
             default: 
                 ui_mensagem_comando_invalido();
                 ui_pressionar_enter_para_continuar();
@@ -87,10 +79,11 @@ int main() {
 
     } while(ch != 'q');
 
-    // 4. Garantir a limpeza final
+    // Limpeza de memória
     if (fila_de_clientes != NULL) {
         destruir_fila_clientes(fila_de_clientes);
     }
+    // TODO: Adicionar limpeza da fila de pedidos se ela contiver ponteiros alocados
 
     return 0;
 }
