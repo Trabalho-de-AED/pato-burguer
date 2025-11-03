@@ -270,6 +270,10 @@ void ui_mensagem_id_invalido() {
     printf("\nID de ingrediente invalido ou nao encontrado na receita! Tente novamente.\n");
 }
 
+void ui_mensagem_ingrediente_sem_estoque() {
+    printf("\nIngrediente sem estoque!\n");
+}
+
 /**
  * @brief Exibe uma mensagem de despedida ao sair do jogo.
  */

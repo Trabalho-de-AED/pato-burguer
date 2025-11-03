@@ -129,6 +129,11 @@ void ui_mensagem_comando_invalido();
 void ui_mensagem_id_invalido();
 
 /**
+ * @brief Exibe uma mensagem informando que o ingrediente está sem estoque.
+ */
+void ui_mensagem_ingrediente_sem_estoque();
+
+/**
  * @brief Exibe uma mensagem de despedida ao sair do jogo.
  */
 void ui_mensagem_saindo();

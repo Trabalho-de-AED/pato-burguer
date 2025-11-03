@@ -125,8 +125,13 @@ int pedido_manager_processar_proximo_pedido() {
             if (id_ingrediente_escolhido != 0) {
                 Ingrediente* ing_escolhido = buscar_ingrediente_por_id(id_ingrediente_escolhido);
                 if (ing_escolhido != NULL) {
-                    empilhar_ingrediente(pilha_jogador, *ing_escolhido);
-                    printf("Adicionado: %s\n", ingrediente_get_nome(ing_escolhido));
+                    if (ingrediente_get_quantidade(ing_escolhido) > 0) {
+                        ingrediente_diminuir_estoque(ing_escolhido, 1);
+                        empilhar_ingrediente(pilha_jogador, *ing_escolhido);
+                        printf("Adicionado: %s\n", ingrediente_get_nome(ing_escolhido));
+                    } else {
+                        ui_mensagem_ingrediente_sem_estoque();
+                    }
                 } else {
                     ui_mensagem_id_invalido();
                 }

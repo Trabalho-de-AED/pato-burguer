@@ -108,4 +108,11 @@ int ingrediente_get_disponivel(const Ingrediente* ing);
  */
 void ingrediente_aumentar_estoque(Ingrediente* ing, int quantidade);
 
+/**
+ * @brief Diminui a quantidade de um ingrediente no estoque.
+ * @param ing Ponteiro para a estrutura Ingrediente.
+ * @param quantidade A quantidade a ser removida.
+ */
+void ingrediente_diminuir_estoque(Ingrediente* ing, int quantidade);
+
 #endif
