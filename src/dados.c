@@ -2,6 +2,8 @@
 #include "config.h"
 #include <stdlib.h>
 
+const float PENALIDADE_POR_ERRO = 0.50f;
+
 /**
  * @brief Array global de ingredientes disponíveis no jogo.
  *        Contém todos os ingredientes com suas propriedades e quantidades iniciais.
@@ -13,6 +15,11 @@ Ingrediente ingredientes[MAX_INGREDIENTES];
  *        Contém todos os hambúrgueres com suas receitas e preços.
  */
 Hamburguer cardapio[MAX_HAMBURGUERS];
+
+/**
+ * @brief Variável global para a loja de ingredientes.
+ */
+Loja loja_de_ingredientes;
 
 /**
  * @brief Inicializa todos os dados do jogo, incluindo ingredientes e cardápio.
@@ -30,6 +37,19 @@ void inicializa_dados() {
     ingredientes[7] = criar_ingrediente(8,"Ovo",20,0.7,1.5,1,2);
     ingredientes[8] = criar_ingrediente(9,"Cebola",20,0.3,0.8,1,2);
     ingredientes[9] = criar_ingrediente(10,"Pepperoni",15,1.0,2.5,1,3);
+
+    
+    inicializar_loja(&loja_de_ingredientes);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 1, "Pao", 0.5, 100);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 2, "Carne", 1.5, 50);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 3, "Queijo", 1.0, 40);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 4, "Alface", 0.2, 80);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 5, "Molho", 0.1, 60);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 6, "Bacon", 1.5, 30);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 7, "Tomate", 0.5, 25);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 8, "Ovo", 0.7, 20);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 9, "Cebola", 0.3, 20);
+    adicionar_ingrediente_loja(&loja_de_ingredientes, 10, "Pepperoni", 1.0, 15);
 
     int ids1[] = {1,2,6};
     int ids2[] = {1,2,3};
@@ -56,4 +76,22 @@ void inicializa_dados() {
     cardapio[9] = criar_hamburguer(10,"Cheesy Duck",14.0,ids10,4);
     cardapio[10] = criar_hamburguer(11,"Bacon Egg Duck",17.0,ids11,4);
     cardapio[11] = criar_hamburguer(12,"Pato Especial",22.0,ids12,10);
+}
+
+Hamburguer* buscar_hamburguer_por_id(int id) {
+    for (int i = 0; i < MAX_HAMBURGUERS; i++) {
+        if (hamburguer_get_id(&cardapio[i]) == id) {
+            return &cardapio[i];
+        }
+    }
+    return NULL;
+}
+
+Ingrediente* buscar_ingrediente_por_id(int id) {
+    for (int i = 0; i < MAX_INGREDIENTES; i++) {
+        if (ingrediente_get_id(&ingredientes[i]) == id) {
+            return &ingredientes[i];
+        }
+    }
+    return NULL;
 }

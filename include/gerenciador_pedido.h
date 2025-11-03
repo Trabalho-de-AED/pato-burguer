@@ -6,12 +6,14 @@
 #include "hamburguer.h"
 #include "ingrediente.h"
 #include "config.h"
+#include "clientes.h" 
 
 /**
  * @brief Fila global que armazena os pedidos do sistema.
  *        Gerenciada exclusivamente pelo módulo gerenciador_pedido.
  */
 extern Fila filaPedidos;
+extern Fila filaPedidosProntos;
 
 /**
  * @brief Inicializa a fila de pedidos global.
@@ -26,6 +28,12 @@ void pedido_manager_inicializar_pedidos();
  * @param n O número de pedidos a serem gerados.
  */
 void pedido_manager_gerar_pedidos(Pedido pedidos[], int n);
+
+/**
+ * @brief Cria um novo pedido com base na preferência de um cliente e o adiciona à fila de pedidos.
+ * @param cliente Ponteiro para o cliente que está fazendo o pedido.
+ */
+void cliente_faz_pedido(const Cliente* cliente);
 
 /**
  * @brief Processa o próximo pedido da fila de pedidos.

@@ -1,4 +1,6 @@
 #include "pilha.h"
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief Inicializa a Pilha, preparando-a para uso.
@@ -43,4 +45,12 @@ int pop(Pilha *p, int *valor) {
  */
 int tamanho(const Pilha *p) {
     return p->topo;
+}
+
+Pilha* pilha_duplicar(const Pilha* p) {
+    Pilha* nova_pilha = (Pilha*) malloc(sizeof(Pilha));
+    if (nova_pilha != NULL) {
+        memcpy(nova_pilha, p, sizeof(Pilha));
+    }
+    return nova_pilha;
 }
