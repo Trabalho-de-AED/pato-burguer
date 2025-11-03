@@ -7,6 +7,7 @@
 #include "ingrediente.h"
 #include "fila_clientes.h"
 #include "pilha_ingredientes.h"
+#include "loja.h"
 
 /**
  * @brief Limpa a tela do console.
@@ -46,6 +47,13 @@ void ui_mostrar_estoque(const Ingrediente ingredientes[], int num_ingredientes);
  * @param num_ingredientes Número de ingredientes no array de ingredientes.
  */
 void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const Ingrediente ingredientes[], int num_ingredientes);
+
+/**
+ * @brief Exibe a interface da loja de ingredientes.
+ * @param loja Ponteiro constante para a loja.
+ * @param saldo_caixa Saldo atual do caixa.
+ */
+void ui_mostrar_loja(const Loja* loja, float saldo_caixa);
 
 /**
  * @brief Exibe as opções de comando disponíveis para o jogador.

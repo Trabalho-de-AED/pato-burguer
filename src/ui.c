@@ -140,6 +140,25 @@ void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const
     printf(".....................\n\n");
 }
 
+void ui_mostrar_loja(const Loja* loja, float saldo_caixa) {
+    ui_limpar_tela();
+    printf("............................\n");
+    printf("PATOBURGUER - LOJA DE INGREDIENTES\n");
+    printf("Seu saldo: R$%.2f\n", saldo_caixa);
+    printf("............................\n\n");
+
+    for (int i = 0; i < loja->num_ingredientes; i++) {
+        printf("ID: %d | %-15s | Preco: R$%.2f\n", 
+               loja->ingredientes[i].id_ingrediente, 
+               loja->ingredientes[i].nome, 
+               loja->ingredientes[i].preco_unitario);
+    }
+
+    printf("\n............................\n");
+    printf("Digite o ID do ingrediente e a quantidade (ex: 1 10).\n");
+    printf("Digite 0 0 para voltar.\n");
+}
+
 /**
  * @brief Exibe as opções de comando disponíveis para o jogador.
  */
@@ -148,6 +167,7 @@ void ui_mostrar_ajuda() {
     printf("Comandos:\n");
     printf("  'c' - Atender proximo cliente\n");
     printf("  'p' - Preparar proximo pedido\n");
+    printf("  'l' - Ir para a loja de ingredientes\n");
     printf("  'q' - Sair do jogo\n\n");
     printf(".....................\n\n");
 }

@@ -99,10 +99,45 @@ int ingrediente_get_nivel_desbloqueio(const Ingrediente* ing) {
 }
 
 /**
+
  * @brief Retorna o status de disponibilidade do ingrediente.
+
  * @param ing Ponteiro constante para a estrutura Ingrediente.
+
  * @return 1 se o ingrediente estiver disponível, 0 caso contrário.
+
  */
+
 int ingrediente_get_disponivel(const Ingrediente* ing) {
+
     return ing->disponivel;
+
+}
+
+
+
+/**
+
+ * @brief Aumenta a quantidade de um ingrediente no estoque.
+
+ * @param ing Ponteiro para a estrutura Ingrediente.
+
+ * @param quantidade A quantidade a ser adicionada.
+
+ */
+
+void ingrediente_aumentar_estoque(Ingrediente* ing, int quantidade) {
+
+    if (ing != NULL) {
+
+        ing->quantidade += quantidade;
+
+        if (ing->quantidade > 0) {
+
+            ing->disponivel = 1;
+
+        }
+
+    }
+
 }

@@ -101,4 +101,11 @@ int ingrediente_get_nivel_desbloqueio(const Ingrediente* ing);
  */
 int ingrediente_get_disponivel(const Ingrediente* ing);
 
+/**
+ * @brief Aumenta a quantidade de um ingrediente no estoque.
+ * @param ing Ponteiro para a estrutura Ingrediente.
+ * @param quantidade A quantidade a ser adicionada.
+ */
+void ingrediente_aumentar_estoque(Ingrediente* ing, int quantidade);
+
 #endif

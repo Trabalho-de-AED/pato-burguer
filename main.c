@@ -69,6 +69,20 @@ int main() {
                 break;
             }
 
+            case 'l': { // Ir para a loja
+                int id_compra, qtd_compra;
+                do {
+                    ui_mostrar_loja(&loja_de_ingredientes, get_saldo_caixa());
+                    printf("> ");
+                    scanf("%d %d", &id_compra, &qtd_compra);
+                    if (id_compra != 0 && qtd_compra > 0) {
+                        comprar_ingrediente(id_compra, qtd_compra);
+                        ui_pressionar_enter_para_continuar();
+                    }
+                } while (id_compra != 0);
+                break;
+            }
+
             case 'q': 
                 ui_mensagem_saindo();
                 break;
@@ -84,6 +98,7 @@ int main() {
     if (fila_de_clientes != NULL) {
         destruir_fila_clientes(fila_de_clientes);
     }
+    destruir_loja(&loja_de_ingredientes);
     // TODO: Adicionar limpeza da fila de pedidos se ela contiver ponteiros alocados
 
     return 0;
