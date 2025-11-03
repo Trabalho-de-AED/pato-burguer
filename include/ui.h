@@ -4,6 +4,7 @@
 #include "fila.h"
 #include "hamburguer.h"
 #include "ingrediente.h"
+#include "fila_clientes.h" // Dependência para FilaClientes
 
 /**
  * @brief Limpa a tela do console.
@@ -15,6 +16,12 @@ void ui_limpar_tela();
  * @brief Exibe as informações de status do jogo (pontuação, moedas, satisfação, cronômetro, nível).
  */
 void ui_mostrar_status();
+
+/**
+ * @brief Exibe a fila de clientes que aguardam atendimento.
+ * @param fila_de_clientes Ponteiro para a fila de clientes.
+ */
+void ui_mostrar_fila_clientes(const FilaClientes* fila_de_clientes);
 
 /**
  * @brief Exibe os pedidos atualmente na fila.
@@ -64,6 +71,11 @@ void ui_mensagem_preparando_pedido(int id);
  * @brief Exibe uma mensagem informando que não há pedidos na fila.
  */
 void ui_mensagem_sem_pedidos();
+
+/**
+ * @brief Exibe uma mensagem informando que novos clientes estão sendo gerados.
+ */
+void ui_mensagem_gerando_clientes();
 
 /**
  * @brief Exibe uma mensagem informando que novos pedidos estão sendo gerados.

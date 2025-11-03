@@ -4,6 +4,7 @@
 #include "config.h"
 #include "pedido.h"
 #include "pilha.h"
+#include "clientes.h"
 
 /**
  * @brief Limpa a tela do console.
@@ -21,6 +22,31 @@ void ui_mostrar_status() {
     printf("Pontuacao: 0 | Moedas: 100 | Satisfacao: 50%%\n");
     printf("Cronometro: 00:00 | Nivel: 1\n");
     printf("............................\n\n");
+}
+
+/**
+ * @brief Exibe a fila de clientes que aguardam atendimento.
+ * @param fila_de_clientes Ponteiro para a fila de clientes.
+ */
+void ui_mostrar_fila_clientes(const FilaClientes* fila_de_clientes) {
+    printf("............................\n");
+    printf("PATOBURGUER - FILA DE CLIENTES\n");
+
+    if (fila_clientes_vazia(fila_de_clientes)) {
+        printf("Nenhum cliente na fila.\n");
+    } else {
+        NoCliente* atual = fila_de_clientes->inicio;
+        int count = 1;
+        while (atual != NULL) {
+            printf("%d: %s (H%d) | ", 
+                   count++,
+                   cliente_get_nome(&atual->cliente), 
+                   cliente_get_id_hamburguer_preferido(&atual->cliente));
+            atual = atual->proximo;
+        }
+    }
+
+    printf("\n............................\n\n");
 }
 
 /**
@@ -118,6 +144,7 @@ void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const
 void ui_mostrar_ajuda() {
     printf("....... JOGO .......\n\n");
     printf("Comandos:\n");
+    printf("  'c' - Gerar nova fila de clientes\n");
     printf("  'p' - Preparar proximo pedido\n");
     printf("  'r' - Gerar novos pedidos de teste\n");
     printf("  'q' - Sair do jogo\n\n");
@@ -157,6 +184,13 @@ void ui_mensagem_preparando_pedido(int id) {
  */
 void ui_mensagem_sem_pedidos() {
     printf("\nNao ha pedidos na fila!\n");
+}
+
+/**
+ * @brief Exibe uma mensagem informando que novos clientes estão sendo gerados.
+ */
+void ui_mensagem_gerando_clientes() {
+    printf("\nGerando nova fila de clientes...\n");
 }
 
 /**
