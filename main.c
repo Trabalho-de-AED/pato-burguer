@@ -11,6 +11,7 @@
 #include "ui.h"
 #include "gerenciador_pedido.h"
 #include "fila_clientes.h"
+#include "tempo.h"
 
 #define CLIENTES_POR_DIA 10
 
@@ -80,6 +81,11 @@ int main() {
                         ui_pressionar_enter_para_continuar();
                     }
                 } while (id_compra != 0);
+                break;
+            }
+
+            case 'f': {
+                avancarDia();
                 break;
             }
 

@@ -13,6 +13,7 @@
  *        Gerenciada exclusivamente pelo módulo gerenciador_pedido.
  */
 extern Fila filaPedidos;
+extern Fila filaPedidosProntos;
 
 /**
  * @brief Inicializa a fila de pedidos global.

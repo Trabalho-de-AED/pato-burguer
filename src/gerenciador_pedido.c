@@ -16,9 +16,11 @@
 static int proximo_id_pedido = 1;
 
 Fila filaPedidos;
+Fila filaPedidosProntos;
 
 void pedido_manager_inicializar_pedidos() {
     inicializaFila(&filaPedidos);
+    inicializaFila(&filaPedidosProntos);
 }
 
 static void insereFilaPorHora(Fila* f, Pedido* p) {
@@ -166,8 +168,7 @@ int pedido_manager_processar_proximo_pedido() {
 
 
         int id_processado = pedido_get_id(pedido_atual);
-        
-        
+        insereFila(&filaPedidosProntos, pedido_atual);
 
         return id_processado;
     }

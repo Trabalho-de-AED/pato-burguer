@@ -32,6 +32,8 @@ typedef struct {
     float valor_pago; 
 } Pedido;
 
+float pedido_get_valor_pago(const Pedido* p);
+
 /**
  * @brief Cria e inicializa uma nova estrutura Pedido.
  * @param id Identificador único do pedido.

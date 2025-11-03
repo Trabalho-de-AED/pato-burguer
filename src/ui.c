@@ -168,6 +168,7 @@ void ui_mostrar_ajuda() {
     printf("  'c' - Atender proximo cliente\n");
     printf("  'p' - Preparar proximo pedido\n");
     printf("  'l' - Ir para a loja de ingredientes\n");
+    printf("  'f' - Finalizar o dia\n");
     printf("  'q' - Sair do jogo\n\n");
     printf(".....................\n\n");
 }

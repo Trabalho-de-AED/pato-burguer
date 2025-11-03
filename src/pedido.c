@@ -65,3 +65,7 @@ StatusPedido pedido_get_status(const Pedido* p) {
 int pedido_get_hora_pedido(const Pedido* p) {
     return p->hora_pedido;
 }
+
+float pedido_get_valor_pago(const Pedido* p) {
+    return p->valor_pago;
+}
