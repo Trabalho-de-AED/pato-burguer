@@ -16,6 +16,8 @@ Pedido criar_pedido(int id, int id_cliente, int id_hamburguer, int hora_pedido) 
     p.id_hamburguer = id_hamburguer;
     p.status = EM_ESPERA;
     p.hora_pedido = hora_pedido;
+    p.erros_montagem = 0;
+    p.valor_pago = 0.0f;
     return p;
 }
 

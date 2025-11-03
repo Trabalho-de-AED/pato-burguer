@@ -1,6 +1,7 @@
 #ifndef UI_H
 #define UI_H
 
+#include "caixa.h"
 #include "fila.h"
 #include "hamburguer.h"
 #include "ingrediente.h"
@@ -62,6 +63,14 @@ void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito);
  * @param pilha_jogador A pilha de ingredientes montada pelo jogador.
  */
 void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador);
+
+/**
+ * @brief Exibe o resultado da validação do pedido.
+ * @param erros O número de erros na montagem.
+ * @param penalidade_total O valor total da penalidade.
+ * @param preco_final O preço final do hambúrguer.
+ */
+void ui_exibir_resultado_validacao(int erros, float penalidade_total, float preco_final);
 
 /**
  * @brief Obtém um comando de caractere do usuário.

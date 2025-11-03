@@ -19,6 +19,7 @@ int main() {
     srand(time(NULL));
 
     // Inicialização dos módulos
+    inicializar_caixa();
     inicializa_dados();
     pedido_manager_inicializar_pedidos();
 

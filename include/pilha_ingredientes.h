@@ -45,4 +45,25 @@ int desempilhar_ingrediente(PilhaIngredientes* pilha, Ingrediente* ingrediente_r
  */
 void destruir_pilha_ingredientes(PilhaIngredientes* pilha);
 
+/**
+ * @brief Duplica uma pilha de ingredientes, criando uma cópia independente.
+ * @param original Ponteiro para a pilha a ser duplicada.
+ * @return Ponteiro para a nova pilha duplicada.
+ */
+PilhaIngredientes* duplicar_pilha_ingredientes(const PilhaIngredientes* original);
+
+/**
+ * @brief Verifica se a pilha de ingredientes está vazia.
+ * @param pilha Ponteiro para a pilha.
+ * @return 1 se a pilha estiver vazia, 0 caso contrário.
+ */
+int pilha_ingredientes_vazia(const PilhaIngredientes* pilha);
+
+/**
+ * @brief Retorna o número de elementos na pilha de ingredientes.
+ * @param pilha Ponteiro para a pilha.
+ * @return O número de ingredientes na pilha.
+ */
+int pilha_ingredientes_tamanho(const PilhaIngredientes* pilha);
+
 #endif // PILHA_INGREDIENTES_H

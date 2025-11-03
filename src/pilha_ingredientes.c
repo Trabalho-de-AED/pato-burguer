@@ -36,3 +36,44 @@ void destruir_pilha_ingredientes(PilhaIngredientes* pilha) {
     while (desempilhar_ingrediente(pilha, &ing_temp)); // Esvazia a pilha, liberando os nós
     free(pilha); // Libera a estrutura da pilha em si
 }
+
+PilhaIngredientes* duplicar_pilha_ingredientes(const PilhaIngredientes* original) {
+    if (original == NULL) return NULL;
+
+    PilhaIngredientes* nova_pilha = criar_pilha_ingredientes();
+    if (nova_pilha == NULL) return NULL;
+
+    NoPilhaIngrediente* atual = original->topo;
+    PilhaIngredientes* pilha_temp = criar_pilha_ingredientes(); // Pilha auxiliar para manter a ordem
+
+    // Copia para a pilha temporária (inverte a ordem)
+    while (atual != NULL) {
+        empilhar_ingrediente(pilha_temp, atual->ingrediente);
+        atual = atual->proximo;
+    }
+
+    // Copia da pilha temporária para a nova pilha (restaura a ordem original)
+    Ingrediente ing_temp;
+    while (desempilhar_ingrediente(pilha_temp, &ing_temp)) {
+        empilhar_ingrediente(nova_pilha, ing_temp);
+    }
+
+    destruir_pilha_ingredientes(pilha_temp);
+    return nova_pilha;
+}
+
+int pilha_ingredientes_vazia(const PilhaIngredientes* pilha) {
+    return (pilha == NULL || pilha->topo == NULL);
+}
+
+int pilha_ingredientes_tamanho(const PilhaIngredientes* pilha) {
+    if (pilha == NULL) return 0;
+    int tamanho = 0;
+    NoPilhaIngrediente* atual = pilha->topo;
+    while (atual != NULL) {
+        tamanho++;
+        atual = atual->proximo;
+    }
+    return tamanho;
+}
+

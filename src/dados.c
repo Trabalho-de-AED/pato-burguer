@@ -2,6 +2,8 @@
 #include "config.h"
 #include <stdlib.h>
 
+const float PENALIDADE_POR_ERRO = 0.50f;
+
 /**
  * @brief Array global de ingredientes disponíveis no jogo.
  *        Contém todos os ingredientes com suas propriedades e quantidades iniciais.

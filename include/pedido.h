@@ -28,6 +28,8 @@ typedef struct {
     int id_hamburguer; /**< ID do hambúrguer solicitado no pedido. */
     StatusPedido status; /**< Status atual do pedido. */
     int hora_pedido; /**< Hora em que o pedido foi feito (para ordenação). */
+    int erros_montagem; /**< Número de erros na montagem do hambúrguer. */
+    float valor_pago; /**< Valor final pago pelo cliente após descontos por erros. */
 } Pedido;
 
 /**

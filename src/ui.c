@@ -20,6 +20,7 @@ void ui_limpar_tela() {
 void ui_mostrar_status() {
     printf("............................\n");
     printf("PATOBURGUER -  STATUS\n");
+    printf("Caixa: R$%.2f\n", get_saldo_caixa());
     printf("Pontuacao: 0 | Moedas: 100 | Satisfacao: 50%%\n");
     printf("Cronometro: 00:00 | Nivel: 1\n");
     printf("............................\n\n");
@@ -254,4 +255,12 @@ void ui_mensagem_id_invalido() {
  */
 void ui_mensagem_saindo() {
     printf("\nSaindo do Pato Burguer...\n");
+}
+
+void ui_exibir_resultado_validacao(int erros, float penalidade_total, float preco_final) {
+    printf("\n--- RESULTADO DO PREPARO ---\n");
+    printf("Erros na montagem: %d\n", erros);
+    printf("Penalidade total: R$%.2f\n", penalidade_total);
+    printf("Valor final do pedido: R$%.2f\n", preco_final);
+    printf("--------------------------------\n");
 }

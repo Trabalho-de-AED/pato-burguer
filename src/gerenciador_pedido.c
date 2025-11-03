@@ -10,36 +10,22 @@
 #include "dados.h"
 #include "ui.h"
 #include "pilha_ingredientes.h"
+#include "caixa.h"
 
 // Contador estático para garantir IDs de pedido únicos
 static int proximo_id_pedido = 1;
 
-/**
- * @brief Fila global que armazena os pedidos do sistema.
- *        Gerenciada exclusivamente por este módulo.
- */
 Fila filaPedidos;
 
-/**
- * @brief Inicializa a fila de pedidos global.
- *        Deve ser chamada antes de qualquer operação com a fila de pedidos.
- */
 void pedido_manager_inicializar_pedidos() {
     inicializaFila(&filaPedidos);
 }
 
-/**
- * @brief Função auxiliar para inserir pedidos na fila ordenados por hora.
- * @param f Ponteiro para a fila onde o pedido será inserido.
- * @param p Ponteiro para o pedido a ser inserido.
- */
 static void insereFilaPorHora(Fila* f, Pedido* p) {
     Fila temp;
     inicializaFila(&temp);
-
     tp_item ptr;
     int inserido = 0;
-
     while (removeFila(f, &ptr)) {
         Pedido* atual = (Pedido*) ptr;
         if (!inserido && pedido_get_hora_pedido(p) < pedido_get_hora_pedido(atual)) {
@@ -48,68 +34,74 @@ static void insereFilaPorHora(Fila* f, Pedido* p) {
         }
         insereFila(&temp, atual);
     }
-
     if (!inserido) {
         insereFila(&temp, p);
     }
-
     *f = temp;
 }
 
-/**
- * @brief Gera um número especificado de pedidos aleatórios e os insere na fila de pedidos.
- *        Os pedidos são gerados com IDs de cliente, IDs de hambúrguer e horas de pedido aleatórios.
- *        Os pedidos são inseridos na fila ordenados por hora de pedido.
- * @param pedidos Array de Pedido onde os pedidos gerados serão armazenados temporariamente.
- * @param n O número de pedidos a serem gerados.
- */
 void pedido_manager_gerar_pedidos(Pedido pedidos[], int n) {
     for (int i = 0; i < n; i++) {
         int id_cliente = rand() % 999 + 1;
         int id_hamburguer = rand() % MAX_HAMBURGUERS + 1;
         int hora_pedido = rand() % 24;
         pedidos[i] = criar_pedido(i + 1, id_cliente, id_hamburguer, hora_pedido);
-        insereFila(&filaPedidos, &pedidos[i]); // Simplificado para não ordenar por hora por enquanto
+        insereFila(&filaPedidos, &pedidos[i]);
     }
 }
 
-/**
- * @brief Cria um novo pedido com base na preferência de um cliente e o adiciona à fila de pedidos.
- * @param cliente Ponteiro para o cliente que está fazendo o pedido.
- */
 void cliente_faz_pedido(const Cliente* cliente) {
-    // Precisamos alocar o pedido dinamicamente, pois ele será armazenado em uma fila genérica (void*).
-    // Se fosse uma variável local, seu endereço se tornaria inválido ao sair da função.
     Pedido* novo_pedido = (Pedido*) malloc(sizeof(Pedido));
     if (novo_pedido == NULL) {
-        // Tratar falha de alocação de memória
         perror("Falha ao alocar memória para novo pedido");
         return;
     }
-
     *novo_pedido = criar_pedido(
         proximo_id_pedido++,
         cliente_get_id(cliente),
         cliente_get_id_hamburguer_preferido(cliente),
-        0 // Hora do pedido pode ser um valor fixo ou baseado em um relógio de jogo
+        0
     );
-
     if (!insereFila(&filaPedidos, novo_pedido)) {
-        // Tratar o caso de a fila de pedidos estar cheia
         fprintf(stderr, "AVISO: Fila de pedidos está cheia. O pedido do cliente %s foi perdido.\n", cliente_get_nome(cliente));
-        free(novo_pedido); // Liberar a memória se não puder ser enfileirado
+        free(novo_pedido);
     }
 }
 
+static int contar_erros_montagem(PilhaIngredientes* pilha_jogador, const Hamburguer* hamburguer_gabarito) {
+    PilhaIngredientes* pilha_receita = criar_pilha_ingredientes();
+    Pilha* pilha_gabarito_copia = pilha_duplicar(&hamburguer_gabarito->ingredientes);
 
+    // Converte a pilha de IDs da receita (estática) para uma pilha de Ingredientes (dinâmica)
+    int id_ing;
+    while (pop(pilha_gabarito_copia, &id_ing)) {
+        Ingrediente* ing = buscar_ingrediente_por_id(id_ing);
+        if (ing) {
+            empilhar_ingrediente(pilha_receita, *ing);
+        }
+    }
+    free(pilha_gabarito_copia); // Libera a cópia da pilha de IDs
 
-// ... (código anterior do arquivo) ...
+    int erros = 0;
+    Ingrediente ing_jogador, ing_receita;
 
-/**
- * @brief Processa o próximo pedido da fila, iniciando o processo de montagem manual.
- *        Remove o pedido da fila, guia o jogador pela montagem e exibe o resultado.
- * @return O ID do pedido processado, ou 0 se a fila estiver vazia.
- */
+    // Compara as duas pilhas
+    while (!pilha_ingredientes_vazia(pilha_jogador) && !pilha_ingredientes_vazia(pilha_receita)) {
+        desempilhar_ingrediente(pilha_jogador, &ing_jogador);
+        desempilhar_ingrediente(pilha_receita, &ing_receita);
+        if (ingrediente_get_id(&ing_jogador) != ingrediente_get_id(&ing_receita)) {
+            erros++;
+        }
+    }
+
+    // Conta ingredientes restantes em qualquer uma das pilhas como erro
+    erros += pilha_ingredientes_tamanho(pilha_jogador);
+    erros += pilha_ingredientes_tamanho(pilha_receita);
+
+    destruir_pilha_ingredientes(pilha_receita);
+    return erros;
+}
+
 int pedido_manager_processar_proximo_pedido() {
     tp_item ptr;
     if(removeFila(&filaPedidos, &ptr)) {
@@ -119,17 +111,15 @@ int pedido_manager_processar_proximo_pedido() {
         Hamburguer* hamburguer_gabarito = buscar_hamburguer_por_id(pedido_get_id_hamburguer(pedido_atual));
         if (hamburguer_gabarito == NULL) {
             fprintf(stderr, "ERRO: Hambúrguer com ID %d não encontrado no cardápio.\n", pedido_get_id_hamburguer(pedido_atual));
-            free(pedido_atual); // Liberar memória do pedido que não pode ser processado
+            free(pedido_atual);
             return 0;
         }
 
-        // Inicia a UI de montagem
         ui_iniciar_tela_montagem(hamburguer_gabarito);
 
         PilhaIngredientes* pilha_jogador = criar_pilha_ingredientes();
         int id_ingrediente_escolhido;
 
-        // Loop de montagem
         do {
             id_ingrediente_escolhido = ui_obter_id_ingrediente();
             if (id_ingrediente_escolhido != 0) {
@@ -142,15 +132,40 @@ int pedido_manager_processar_proximo_pedido() {
                 }
             }
         } while (id_ingrediente_escolhido != 0);
+        
+        PilhaIngredientes* pilha_jogador_original = duplicar_pilha_ingredientes(pilha_jogador);
 
-        // Exibe o resultado e limpa a memória
-        ui_exibir_hamburguer_montado(pilha_jogador);
+        
+        int erros = contar_erros_montagem(pilha_jogador, hamburguer_gabarito);
+        float preco_base = hamburguer_get_preco_venda(hamburguer_gabarito);
+        float penalidade = erros * PENALIDADE_POR_ERRO;
+        float preco_final = preco_base - penalidade;
+        if (preco_final < 0) {
+            preco_final = 0;
+        }
+
+        atualizar_caixa(preco_final);
+        
+        pedido_atual->erros_montagem = erros;
+        pedido_atual->valor_pago = preco_final;
+        pedido_atual->status = PRONTO;
+        
+        PilhaIngredientes* pilha_para_exibir = duplicar_pilha_ingredientes(pilha_jogador_original);
+        ui_exibir_hamburguer_montado(pilha_para_exibir);
+        destruir_pilha_ingredientes(pilha_para_exibir);
+
+        ui_exibir_resultado_validacao(erros, penalidade, preco_final);
+        
         destruir_pilha_ingredientes(pilha_jogador);
+        destruir_pilha_ingredientes(pilha_jogador_original);
+
 
         int id_processado = pedido_get_id(pedido_atual);
-        free(pedido_atual); // Liberar a memória do pedido que foi alocado dinamicamente
+        // Não liberar o pedido_atual aqui se você for armazená-lo em outra lista (e.g., pedidos prontos)
+        // free(pedido_atual); 
 
         return id_processado;
-    } 
+    }
     return 0; // Fila de pedidos vazia
 }
+
