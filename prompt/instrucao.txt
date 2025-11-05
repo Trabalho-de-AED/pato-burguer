@@ -1,0 +1,30 @@
+Implementar a struct Loja para representar o sistema de compra de ingredientes do restaurante. A estrutura deve permitir armazenar dinamicamente os ingredientes disponíveis, seus preços e quantidades em estoque, possibilitando operações de consulta, adição, remoção e atualização de itens de forma eficiente.
+A struct Loja será utilizada para simular a compra de ingredientes, integrando o controle de estoque e o cálculo de custos dos pedidos.
+Requisitos técnicos:
+
+• Criar uma struct Loja com, no mínimo, os seguintes atributos:
+
+– Lista dinâmica de ingredientes disponíveis (cada ingrediente deve conter nome, preço unitário e quantidade em estoque).
+
+– Total de itens cadastrados.
+
+• Implementar funções para manipulação da loja:
+
+– inicializarLoja() — alocar dinamicamente a lista de ingredientes e inicializar a quantidade de itens.
+
+– adicionarIngrediente(Ingrediente novo) — inserir um novo ingrediente na lista dinâmica, aumentando a capacidade conforme necessário.
+
+– removerIngrediente(nome) — remover um ingrediente pelo nome, liberando a memória correspondente.
+
+– atualizarIngrediente(nome, novaQuantidade, novoPreco) — atualizar quantidade ou preço de um ingrediente existente.
+
+– exibirLoja() — listar todos os ingredientes disponíveis com quantidade em estoque e preço unitário.
+
+• Garantir o uso correto de alocação e liberação de memória para a lista dinâmica e para cada ingrediente armazenado.
+
+• Integrar a struct Loja com o módulo de pedidos e caixa, possibilitando a dedução de ingredientes comprados ou utilizados.
+Fluxo esperado:
+1. Inicializar a loja no início do sistema com capacidade inicial de ingredientes.
+2. Permitir que o usuário ou sistema adicione, remova ou atualize ingredientes dinamicamente durante a execução.
+3. Exibir periodicamente ou sob solicitação a lista de ingredientes disponíveis, seus preços e quantidades.
+4. Liberar todos os recursos de memória alocados para a loja ao encerrar o programa.

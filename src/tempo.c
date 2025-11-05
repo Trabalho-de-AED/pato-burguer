@@ -19,7 +19,7 @@ void avancarDia() {
                     pedido_get_id_cliente(p),
                     pedido_get_id_hamburguer(p),
                     pedido_get_valor_pago(p));
-            free(p); // Libera a memória do pedido processado
+            free(p);
         }
         fclose(arquivo_historico);
     }

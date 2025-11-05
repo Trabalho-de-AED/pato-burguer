@@ -1,0 +1,177 @@
+Implementar a lógica de avanço de dias no sistema do restaurante, permitindo simular a passagem do tempo durante a operação. Cada dia deve atualizar informações relevantes, como contagem de dias de operação, registros de pedidos, estoque de ingredientes e geração de histórico de vendas.
+A lógica deve garantir que todas as operações dependentes do tempo sejam atualizadas corretamente, e fornecer opções para finalizar o dia e consultar os dados acumulados.
+Requisitos técnicos:
+
+• Implementar uma variável ou struct que mantenha o contador de dias de operação.
+
+• Criar uma função avancarDia() que execute as seguintes ações:
+
+– Incrementar o contador de dias de operação.
+
+– Atualizar ou gerar o arquivo de histórico de vendas do dia anterior, registrando todos os pedidos processados.
+
+– Verificar e atualizar o estoque de ingredientes 
+
+– Reiniciar registros temporários de pedidos para o novo dia.
+
+• Integrar a função de avanço de dias com a interface do terminal, oferecendo uma opção clara no menu principal para finalizar o dia.
+
+• Garantir que a função de avanço de dias não corrompa os dados existentes do caixa, da loja ou do histórico de vendas.
+
+• Atualizar o estado do sistema de forma consistente para que consultas de saldo, estoque e histórico reflitam o novo dia corretamente.
+Fluxo esperado:
+1. O usuário seleciona a opção “Finalizar dia” no menu principal.
+2. O sistema executa a função avancarDia(), realizando todas as atualizações necessárias.
+3. O arquivo de histórico de vendas é gerado ou atualizado com os pedidos do dia anterior.
+4. O contador de dias de operação é incrementado.
+5. O estoque de ingredientes é verificado e atualizado, se necessário.
+6. O sistema exibe uma mensagem confirmando o avanço do dia e retorna ao menu principal para continuar a operação do próximo dia.
+
+---
+
+Implementar a funcionalidade que possibilita ao jogador montar manualmente o hambúrguer solicitado pelo cliente durante o atendimento.
+
+A montagem deve ser feita por meio da inserção de ingredientes em uma estrutura de pilha, representando a ordem de empilhamento dos ingredientes (do pão de baixo até o pão de cima).
+
+O jogador deve inserir os ingredientes um a um via terminal, até finalizar a montagem.
+Requisitos técnicos:
+• Utilizar uma struct ingrediente já implementada.
+• Utilizar uma pilha dinâmica (baseada em nós encadeados) para armazenar os ingredientes do hambúrguer montado.
+• Cada novo ingrediente digitado pelo jogador deve ser empilhado no topo da pilha.
+• O jogador deve poder digitar “fim” ou equivalente para encerrar a montagem.
+• Ao final, o sistema deve exibir o hambúrguer montado, listando os ingredientes de cima para baixo.
+• A pilha deve permitir operações de empilhar, desempilhar e exibir os ingredientes.
+• Garantir o uso de alocação e liberação de memória adequadas para os nós da pilha.
+Fluxo esperado:
+1. Exibir o pedido do cliente (nome e hambúrguer solicitado).
+2. Solicitar que o jogador insira os ingredientes na ordem desejada.
+3. Para cada ingrediente digitado, empilhar na estrutura de dados.
+4. Encerrar a montagem quando o jogador indicar o fim.
+5. Mostrar no terminal a pilha de ingredientes representando o hambúrguer finalizado.
+
+---
+
+Implementar a funcionalidade responsável por criar uma fila de clientes no início de cada dia de atendimento.
+
+Cada cliente deve ser representado por uma struct contendo o nome e o número do pedido, onde o número do pedido corresponde ao índice de um hambúrguer no cardápio.
+
+Os nomes e pedidos devem ser gerados aleatoriamente.
+
+Durante o atendimento, o sistema deve percorrer a fila e exibir no terminal o nome do cliente e o número do pedido.
+Requisitos técnicos:
+• Utilizar structs para representar o cliente e a fila de clientes.
+• Implementar uma fila que deve ser dinâmica, baseada em nós encadeados para armazenar as structs Clientes.
+• Criar uma lista fixa de nomes possíveis para os clientes.
+• Definir uma quantidade de clientes a serem gerados por dia.
+• Implementar a lógica de geração aleatória de nomes e números de pedidos.
+• Garantir que a semente do gerador de números aleatórios varie a cada execução.
+• Exibir no terminal, em ordem de atendimento, o nome e o número do pedido de cada cliente.
+
+
+---
+
+Implementar a funcionalidade responsável por verificar a conformidade do hambúrguer montado com a receita original cadastrada no cardápio.
+A verificação deve ocorrer automaticamente ao término da montagem do hambúrguer. O sistema deve comparar a sequência de ingredientes empilhados pelo jogador com a sequência definida na receita oficial, identificando discrepâncias relacionadas a ingredientes faltantes, extras ou fora de ordem.
+Com base na quantidade total de erros detectados, o sistema aplicará uma penalidade fixa ao valor final do pedido, reduzindo o preço total a ser pago pelo cliente. Após o cálculo, o valor efetivamente pago deve ser adicionado ao total do caixa do restaurante.
+Requisitos técnicos:
+
+• Utilizar duas pilhas dinâmicas (baseadas em nós encadeados): uma para representar o hambúrguer montado pelo jogador e outra para a receita original do cardápio.
+
+• Implementar uma função de comparação que percorra simultaneamente as duas pilhas, elemento por elemento, do topo até a base.
+
+• Contabilizar os seguintes tipos de erro:
+
+– Ingrediente ausente (presente na receita e ausente na montagem).
+
+– Ingrediente extra (presente na montagem e não na receita).
+
+– Ingrediente fora de ordem (mesmos ingredientes, mas posições divergentes).
+
+• Cada erro identificado deve gerar uma penalidade de valor fixo (por exemplo, R$0,50) a ser subtraída do preço base do hambúrguer.
+
+• O valor da penalidade deve ser armazenado em uma constante global configurável.
+
+• O resultado final deve incluir o número total de erros, o valor total das penalidades e o preço ajustado.
+
+• O valor ajustado do pedido deve ser somado ao saldo atual do caixa.
+
+• O sistema deve registrar o resultado da verificação (quantidade de erros, valor final e atualização do caixa) na estrutura do pedido.
+
+• Garantir o uso correto de alocação e liberação de memória das pilhas utilizadas.
+Fluxo esperado:
+1. Receber o sinal de término da montagem do hambúrguer.
+2. Obter a pilha de ingredientes do hambúrguer montado e a pilha correspondente da receita original.
+3. Executar a função de comparação entre as pilhas.
+4. Identificar e contabilizar todos os erros de conformidade.
+5. Calcular o valor final do pedido com base nas penalidades aplicadas.
+6. Atualizar o valor do caixa com o montante pago pelo cliente.
+7. Exibir no terminal o número de erros, o valor total das penalidades, o valor final ajustado e o novo saldo do caixa.
+8. Liberar corretamente a memória alocada para ambas as pilhas após a verificação.
+
+---
+
+Implementar a estrutura de dados responsável por representar o caixa do restaurante, armazenando e gerenciando o valor total arrecadado a partir dos pedidos concluídos.
+A struct Caixa deve permitir operações de inicialização, atualização e consulta do saldo atual
+Requisitos técnicos:
+
+• Criar uma struct Caixa contendo, no mínimo, o seguinte atributo:
+
+– float saldoTotal; — representa o valor acumulado no caixa.
+
+• Implementar funções específicas para manipulação do caixa:
+
+– inicializarCaixa() — deve criar e inicializar o caixa com saldo igual 0.
+
+– atualizarCaixa(float valor) — deve adicionar o valor informado ao saldo total do caixa.
+
+– exibirCaixa() — deve mostrar no terminal o saldo atual do caixa formatado em reais.
+
+• Garantir o uso correto de alocação e liberação de memória caso a estrutura seja alocada dinamicamente.
+
+• A estrutura deve ser acessível por outros módulos do sistema (ex.: módulo de pedidos) para permitir a atualização do saldo após cada venda.
+
+• Validar que o saldo nunca assuma valores negativos.
+
+• Opcionalmente, incluir campos adicionais, como número de transações realizadas ou histórico de movimentações, para expansão futura.
+Fluxo esperado:
+1. Inicializar o caixa no início da execução do sistema.
+2. Após cada pedido finalizado, chamar a função atualizarCaixa() com o valor efetivamente pago pelo cliente.
+3. Exibir periodicamente ou sob solicitação o saldo atual do caixa com a função exibirCaixa().
+4. Liberar os recursos associados à estrutura do caixa ao encerrar o programa.
+
+---
+
+Implementar a struct Loja para representar o sistema de compra de ingredientes do restaurante. A estrutura deve permitir armazenar dinamicamente os ingredientes disponíveis, seus preços e quantidades em estoque, possibilitando operações de consulta, adição, remoção e atualização de itens de forma eficiente.
+A struct Loja será utilizada para simular a compra de ingredientes, integrando o controle de estoque e o cálculo de custos dos pedidos.
+Requisitos técnicos:
+
+• Criar uma struct Loja com, no mínimo, os seguintes atributos:
+
+– Lista dinâmica de ingredientes disponíveis (cada ingrediente deve conter nome, preço unitário e quantidade em estoque).
+
+– Total de itens cadastrados.
+
+• Implementar funções para manipulação da loja:
+
+– inicializarLoja() — alocar dinamicamente a lista de ingredientes e inicializar a quantidade de itens.
+
+– adicionarIngrediente(Ingrediente novo) — inserir um novo ingrediente na lista dinâmica, aumentando a capacidade conforme necessário.
+
+– removerIngrediente(nome) — remover um ingrediente pelo nome, liberando a memória correspondente.
+
+– atualizarIngrediente(nome, novaQuantidade, novoPreco) — atualizar quantidade ou preço de um ingrediente existente.
+
+– exibirLoja() — listar todos os ingredientes disponíveis com quantidade em estoque e preço unitário.
+
+• Garantir o uso correto de alocação e liberação de memória para a lista dinâmica e para cada ingrediente armazenado.
+
+• Integrar a struct Loja com o módulo de pedidos e caixa, possibilitando a dedução de ingredientes comprados ou utilizados.
+Fluxo esperado:
+1. Inicializar a loja no início do sistema com capacidade inicial de ingredientes.
+2. Permitir que o usuário ou sistema adicione, remova ou atualize ingredientes dinamicamente durante a execução.
+3. Exibir periodicamente ou sob solicitação a lista de ingredientes disponíveis, seus preços e quantidades.
+4. Liberar todos os recursos de memória alocados para a loja ao encerrar o programa.
+
+
+---
+

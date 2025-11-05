@@ -1,0 +1,3 @@
+ID Pedido: 1, ID Cliente: 1, ID Hamburguer: 3, Valor: 15.00
+ID Pedido: 2, ID Cliente: 2, ID Hamburguer: 12, Valor: 17.00
+ID Pedido: 3, ID Cliente: 3, ID Hamburguer: 2, Valor: 12.00
