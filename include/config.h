@@ -7,4 +7,6 @@
 #define MAX_COLUNAS_ESTOQUE 3
 #define ESPACAMENTO_COLUNAS 20
 
+extern const float PENALIDADE_POR_ERRO;
+
 #endif

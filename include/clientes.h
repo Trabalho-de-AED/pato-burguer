@@ -1,6 +1,9 @@
 #ifndef CLIENTES_H
 #define CLIENTES_H
 
+
+struct FilaClientes;
+
 /**
  * @brief Estrutura que representa um cliente no jogo.
  */
@@ -63,5 +66,12 @@ int cliente_get_paciencia(const Cliente* cliente);
  * @return A quantidade de moedas disponíveis.
  */
 int cliente_get_moedas_disponiveis(const Cliente* cliente);
+
+/**
+ * @brief Gera uma quantidade de clientes com nomes e pedidos aleatórios e os insere na fila.
+ * @param fila Ponteiro para a fila de clientes onde os novos clientes serão adicionados.
+ * @param quantidade O número de clientes a serem gerados.
+ */
+void gerar_clientes_na_fila(struct FilaClientes* fila, int quantidade);
 
 #endif

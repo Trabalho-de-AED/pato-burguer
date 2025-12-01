@@ -1,6 +1,8 @@
 #ifndef PILHA_H
 #define PILHA_H
 
+#include <stdlib.h>
+
 /**
  * @file pilha.h
  * @brief Definição da estrutura de dados Pilha e suas operações.
@@ -13,8 +15,8 @@
  *        Os dados são armazenados em um array de tamanho fixo.
  */
 typedef struct {
-    int dados[50];  /**< Array que armazena os elementos da pilha. */
-    int topo;       /**< Índice do topo da pilha. */
+    int dados[50];  
+    int topo;       
 } Pilha;
 
 /**
@@ -44,5 +46,12 @@ int pop(Pilha *p, int *valor);
  * @return O número de elementos na pilha.
  */
 int tamanho(const Pilha *p);
+
+/**
+ * @brief Duplica uma pilha, criando uma cópia independente.
+ * @param p Ponteiro constante para a pilha a ser duplicada.
+ * @return Ponteiro para a nova pilha duplicada.
+ */
+Pilha* pilha_duplicar(const Pilha* p);
 
 #endif

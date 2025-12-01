@@ -13,22 +13,26 @@
  * @brief Enumeração para representar o status atual de um pedido.
  */
 typedef enum {
-    EM_ESPERA, /**< O pedido está aguardando para ser processado. */
-    EM_PREPARO, /**< O pedido está sendo preparado. */
-    PRONTO, /**< O pedido está pronto para ser entregue. */
-    ENTREGUE /**< O pedido foi entregue ao cliente. */
+    EM_ESPERA, 
+    EM_PREPARO, 
+    PRONTO, 
+    ENTREGUE 
 } StatusPedido;
 
 /**
  * @brief Estrutura que representa um Pedido no jogo.
  */
 typedef struct {
-    int id; /**< Identificador único do pedido. */
-    int id_cliente; /**< ID do cliente que fez o pedido. */
-    int id_hamburguer; /**< ID do hambúrguer solicitado no pedido. */
-    StatusPedido status; /**< Status atual do pedido. */
-    int hora_pedido; /**< Hora em que o pedido foi feito (para ordenação). */
+    int id; 
+    int id_cliente; 
+    int id_hamburguer; 
+    StatusPedido status; 
+    int hora_pedido; 
+    int erros_montagem; 
+    float valor_pago; 
 } Pedido;
+
+float pedido_get_valor_pago(const Pedido* p);
 
 /**
  * @brief Cria e inicializa uma nova estrutura Pedido.
