@@ -177,7 +177,7 @@ void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito, bool mostra
         printf("\n----------------------------------------\n");
     }
     
-    printf("Digite o ID do ingrediente para adicionar à pilha.\n");
+    printf("Digite o ID do ingrediente para adicionar a pilha.\n");
     printf("Digite '0' para finalizar a montagem.\n");
     printf("----------------------------------------\n");
 }
