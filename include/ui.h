@@ -1,6 +1,8 @@
 #ifndef UI_H
 #define UI_H
 
+#include <stdbool.h> // Adicionado para usar o tipo bool
+
 #include "caixa.h"
 #include "fila.h"
 #include "hamburguer.h"
@@ -22,7 +24,7 @@ void ui_mostrar_loja(const Loja* loja, float saldo_caixa);
 
 void ui_mostrar_ajuda();
 
-void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito);
+void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito, bool mostrar_receita);
 
 void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador);
 

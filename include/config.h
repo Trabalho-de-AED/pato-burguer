@@ -6,6 +6,7 @@
 #define MAX_PEDIDOS 6
 #define MAX_COLUNAS_ESTOQUE 3
 #define ESPACAMENTO_COLUNAS 20
+#define TEMPO_EXIBICAO_RECEITA_SEGUNDOS 3 // Tempo em segundos para exibir a receita
 
 extern const float PENALIDADE_POR_ERRO;
 
