@@ -4,28 +4,12 @@
 
 const float PENALIDADE_POR_ERRO = 0.50f;
 
-/**
- * @brief Array global de ingredientes disponíveis no jogo.
- *        Contém todos os ingredientes com suas propriedades e quantidades iniciais.
- */
 Ingrediente ingredientes[MAX_INGREDIENTES];
 
-/**
- * @brief Array global de hambúrgueres disponíveis no cardápio.
- *        Contém todos os hambúrgueres com suas receitas e preços.
- */
 Hamburguer cardapio[MAX_HAMBURGUERS];
 
-/**
- * @brief Variável global para a loja de ingredientes.
- */
 Loja loja_de_ingredientes;
 
-/**
- * @brief Inicializa todos os dados do jogo, incluindo ingredientes e cardápio.
- *        Esta função deve ser chamada uma vez no início do programa para popular
- *        as estruturas de dados globais com valores pré-definidos.
- */
 void inicializa_dados() {
     ingredientes[0] = criar_ingrediente(1,"Pao",50,1.0,2.0,1,1);
     ingredientes[1] = criar_ingrediente(2,"Carne",50,2.0,4.0,2,1);
@@ -40,16 +24,6 @@ void inicializa_dados() {
 
     
     inicializar_loja(&loja_de_ingredientes);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 1, "Pao", 0.5, 100);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 2, "Carne", 1.5, 50);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 3, "Queijo", 1.0, 40);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 4, "Alface", 0.2, 80);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 5, "Molho", 0.1, 60);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 6, "Bacon", 1.5, 30);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 7, "Tomate", 0.5, 25);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 8, "Ovo", 0.7, 20);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 9, "Cebola", 0.3, 20);
-    adicionar_ingrediente_loja(&loja_de_ingredientes, 10, "Pepperoni", 1.0, 15);
 
     int ids1[] = {1,2,6};
     int ids2[] = {1,2,3};

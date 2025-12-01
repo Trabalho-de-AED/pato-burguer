@@ -71,16 +71,48 @@ int main() {
             }
 
             case 'l': { 
-                int id_compra, qtd_compra;
+                char opcao_loja;
                 do {
                     ui_mostrar_loja(&loja_de_ingredientes, get_saldo_caixa());
-                    printf("> ");
-                    scanf("%d %d", &id_compra, &qtd_compra);
-                    if (id_compra != 0 && qtd_compra > 0) {
-                        comprar_ingrediente(id_compra, qtd_compra);
-                        ui_pressionar_enter_para_continuar();
+                    opcao_loja = ui_obter_comando();
+                    ui_limpar_tela(); // Limpar a tela após o comando
+
+                    switch (opcao_loja) {
+                        case 'c': { // Comprar ingrediente
+                            int id_compra, qtd_compra;
+                            printf("--- MODO COMPRA ---\n");
+                            printf("Digite o ID do ingrediente e a quantidade (ex: 1 10).\n");
+                            printf("Digite 0 0 para voltar.\n");
+                            printf("> ");
+                            scanf("%d %d", &id_compra, &qtd_compra);
+                            if (id_compra != 0 && qtd_compra > 0) {
+                                comprar_ingrediente(id_compra, qtd_compra);
+                            }
+                            ui_pressionar_enter_para_continuar();
+                            break;
+                        }
+                        case 'v': { // Vender ingrediente
+                            int id_venda, qtd_venda;
+                            ui_iniciar_tela_venda(ingredientes, MAX_INGREDIENTES); // Exibe estoque para venda
+                            id_venda = ui_pedir_id_ingrediente_venda();
+                            if (id_venda != 0) {
+                                qtd_venda = ui_pedir_quantidade_venda();
+                                if (qtd_venda > 0) {
+                                    vender_ingrediente(id_venda, qtd_venda);
+                                }
+                            }
+                            ui_pressionar_enter_para_continuar();
+                            break;
+                        }
+                        case 's': // Sair da loja
+                            printf("Saindo da loja...\n");
+                            break;
+                        default:
+                            ui_mensagem_comando_invalido();
+                            ui_pressionar_enter_para_continuar();
+                            break;
                     }
-                } while (id_compra != 0);
+                } while (opcao_loja != 's');
                 break;
             }
 

@@ -4,100 +4,85 @@
 #include <string.h>
 #include "dados.h"
 #include "caixa.h"
+#include "ListaSE.h"
 
 void inicializar_loja(Loja* loja) {
-    loja->ingredientes = malloc(sizeof(IngredienteLoja) * 10); 
-    if (!loja->ingredientes) {
-        perror("Falha ao alocar memoria para loja");
-        exit(EXIT_FAILURE);
-    }
-    loja->num_ingredientes = 0;
-    loja->capacidade = 10;
-}
-
-void adicionar_ingrediente_loja(Loja* loja, int id, const char* nome, float preco, int estoque) {
-    if (loja->num_ingredientes >= loja->capacidade) {
-        
-        loja->capacidade *= 2;
-        loja->ingredientes = realloc(loja->ingredientes, sizeof(IngredienteLoja) * loja->capacidade);
-        if (!loja->ingredientes) {
-            perror("Falha ao realocar memoria para loja");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    IngredienteLoja* novo = &loja->ingredientes[loja->num_ingredientes++];
-    novo->id_ingrediente = id;
-    strncpy(novo->nome, nome, 49);
-    novo->nome[49] = '\0';
-    novo->preco_unitario = preco;
-    novo->estoque_inicial = estoque;
+    loja->ingredientes_disponiveis = inicializa_listase(); 
+    
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 1);
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 2);
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 3); 
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 4);
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 5);
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 6); 
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 7); 
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 8);
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 9); 
+    insere_listase_no_fim(&(loja->ingredientes_disponiveis), 10);
 }
 
 int comprar_ingrediente(int id_ingrediente, int quantidade) {
-
-    IngredienteLoja* item_loja = NULL;
-
-    for (int i = 0; i < loja_de_ingredientes.num_ingredientes; i++) {
-
-        if (loja_de_ingredientes.ingredientes[i].id_ingrediente == id_ingrediente) {
-
-            item_loja = &loja_de_ingredientes.ingredientes[i];
-
-            break;
-
-        }
-
-    }
-
-    if (item_loja == NULL) {
-
-        printf("Erro: Ingrediente nao encontrado na loja.\n");
-
+    tp_lista_encadeada* no_ingrediente = busca_listase(loja_de_ingredientes.ingredientes_disponiveis, id_ingrediente);
+    
+    if (no_ingrediente == NULL) {
+        printf("Erro: Ingrediente %d nao encontrado na loja.\n", id_ingrediente);
         return 0; 
-
     }
 
-    float custo_total = item_loja->preco_unitario * quantidade;
+    Ingrediente* ingrediente_info = buscar_ingrediente_por_id(id_ingrediente);
+    if (ingrediente_info == NULL) {
+        printf("Erro interno: Informacoes do ingrediente %d nao encontradas.\n", id_ingrediente);
+        return 0;
+    }
+
+    float custo_total = ingrediente_info->preco_compra * quantidade;
 
     if (!debitar_do_caixa(custo_total)) {
-
         printf("Compra falhou: Saldo insuficiente!\n");
-
         return 0; 
-
     }
 
     Ingrediente* ingrediente_estoque = buscar_ingrediente_por_id(id_ingrediente);
-
     if (ingrediente_estoque == NULL) {
-
         printf("Erro: Ingrediente nao encontrado no estoque principal.\n");
-
-        atualizar_caixa(custo_total);
-
+        atualizar_caixa(custo_total); // Devolve o dinheiro
         return 0; 
-
     }
 
     ingrediente_aumentar_estoque(ingrediente_estoque, quantidade);
-
-    printf("Compra de %d unidade(s) de %s realizada com sucesso!\n", quantidade, item_loja->nome);
-
+    printf("Compra de %d unidade(s) de %s realizada com sucesso!\n", quantidade, ingrediente_info->nome);
     return 1; 
-
 }
 
-void exibir_loja(const Loja* loja) {
-    
-    printf("Funcao 'exibir_loja' ainda nao implementada.\n");
-}
 
 void destruir_loja(Loja* loja) {
-    if (loja && loja->ingredientes) {
-        free(loja->ingredientes);
-        loja->ingredientes = NULL;
-        loja->num_ingredientes = 0;
-        loja->capacidade = 0;
+    if (loja) {
+        destroi_listase(&(loja->ingredientes_disponiveis));
     }
 }
+
+int vender_ingrediente(int id_ingrediente, int quantidade) {
+    Ingrediente* ingrediente_estoque = buscar_ingrediente_por_id(id_ingrediente);
+
+    if (ingrediente_estoque == NULL) {
+        printf("Erro: Ingrediente %d nao encontrado no estoque.\n", id_ingrediente);
+        return 0;
+    }
+
+    if (ingrediente_get_quantidade(ingrediente_estoque) < quantidade) {
+        printf("Erro: Voce nao tem %d unidade(s) de %s para vender. Estoque atual: %d.\n",
+               quantidade, ingrediente_get_nome(ingrediente_estoque), ingrediente_get_quantidade(ingrediente_estoque));
+        return 0;
+    }
+
+    float preco_venda_unitario = ingrediente_estoque->preco_compra * 0.8; 
+    float valor_total_venda = preco_venda_unitario * quantidade;
+
+    ingrediente_diminuir_estoque(ingrediente_estoque, quantidade);
+    atualizar_caixa(valor_total_venda); 
+
+    printf("Venda de %d unidade(s) de %s realizada com sucesso por R$%.2f!\n",
+           quantidade, ingrediente_get_nome(ingrediente_estoque), valor_total_venda);
+    return 1;
+}
+

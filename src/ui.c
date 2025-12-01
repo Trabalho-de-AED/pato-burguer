@@ -1,22 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> 
 #include "ui.h"
 #include "config.h"
 #include "pedido.h"
 #include "pilha.h"
 #include "clientes.h"
 #include "dados.h"
+#include "ListaSE.h" 
+#include "loja.h"    
 
-/**
- * @brief Limpa a tela do console.
- */
 void ui_limpar_tela() {
     system("cls");
 }
 
-/**
- * @brief Exibe as informações de status do jogo.
- */
 void ui_mostrar_status() {
     printf("............................\n");
     printf("PATOBURGUER -  STATUS\n");
@@ -26,10 +23,6 @@ void ui_mostrar_status() {
     printf("............................\n\n");
 }
 
-/**
- * @brief Exibe a fila de clientes que aguardam atendimento.
- * @param fila_de_clientes Ponteiro para a fila de clientes.
- */
 void ui_mostrar_fila_clientes(const FilaClientes* fila_de_clientes) {
     printf("............................\n");
     printf("PATOBURGUER - FILA DE CLIENTES\n");
@@ -51,10 +44,6 @@ void ui_mostrar_fila_clientes(const FilaClientes* fila_de_clientes) {
     printf("\n............................\n\n");
 }
 
-/**
- * @brief Exibe os pedidos atualmente na fila.
- * @param filaPedidos Ponteiro constante para a fila de pedidos a ser exibida.
- */
 void ui_mostrar_pedidos(const Fila* filaPedidos) {
     printf("............................\n");
     printf("PATOBURGUER - PEDIDOS DO DIA\n");
@@ -79,11 +68,6 @@ void ui_mostrar_pedidos(const Fila* filaPedidos) {
     printf("\n............................\n\n");
 }
 
-/**
- * @brief Exibe o estoque atual de ingredientes.
- * @param ingredientes Array constante de ingredientes a serem exibidos.
- * @param num_ingredientes Número de ingredientes no array.
- */
 void ui_mostrar_estoque(const Ingrediente ingredientes[], int num_ingredientes) {
     printf("............................\n");
     printf("PATOBURGUER - ESTOQUE\n");
@@ -100,13 +84,6 @@ void ui_mostrar_estoque(const Ingrediente ingredientes[], int num_ingredientes) 
     printf("\n............................\n\n");
 }
 
-/**
- * @brief Exibe o cardápio de hambúrgueres, incluindo seus ingredientes.
- * @param cardapio Array constante de hambúrgueres a serem exibidos.
- * @param num_hamburguers Número de hambúrgueres no cardápio.
- * @param ingredientes Array constante de ingredientes para buscar os nomes dos ingredientes.
- * @param num_ingredientes Número de ingredientes no array de ingredientes.
- */
 void ui_mostrar_cardapio(const Hamburguer cardapio[], int num_hamburguers, const Ingrediente ingredientes[], int num_ingredientes) {
     printf("............................\n");
     printf("PATOBURGUER - CARDAPIO\n");
@@ -147,27 +124,33 @@ void ui_mostrar_loja(const Loja* loja, float saldo_caixa) {
     printf("Seu saldo: R$%.2f\n", saldo_caixa);
     printf("............................\n\n");
 
-    for (int i = 0; i < loja->num_ingredientes; i++) {
-        printf("ID: %d | %-15s | Preco: R$%.2f\n", 
-               loja->ingredientes[i].id_ingrediente, 
-               loja->ingredientes[i].nome, 
-               loja->ingredientes[i].preco_unitario);
+    printf("Ingredientes Disponiveis para Compra:\n");
+    tp_lista_encadeada* atual = loja->ingredientes_disponiveis;
+    while (atual != NULL) {
+        Ingrediente* ing = buscar_ingrediente_por_id(atual->info);
+        if (ing != NULL) {
+            printf("ID: %d | %-15s | Preco de Compra: R$%.2f\n",
+                   ingrediente_get_id(ing),
+                   ingrediente_get_nome(ing),
+                   ingrediente_get_preco_compra(ing));
+        }
+        atual = atual->prox;
     }
 
     printf("\n............................\n");
-    printf("Digite o ID do ingrediente e a quantidade (ex: 1 10).\n");
-    printf("Digite 0 0 para voltar.\n");
+    printf("Opcoes:\n");
+    printf("  'c' - Comprar ingrediente\n");
+    printf("  'v' - Vender ingrediente\n");
+    printf("  's' - Sair da loja\n");
+    printf("............................\n");
 }
 
-/**
- * @brief Exibe as opções de comando disponíveis para o jogador.
- */
 void ui_mostrar_ajuda() {
     printf("....... JOGO .......\n\n");
     printf("Comandos:\n");
     printf("  'c' - Atender proximo cliente\n");
     printf("  'p' - Preparar proximo pedido\n");
-    printf("  'l' - Ir para a loja de ingredientes\n");
+    printf("  'l' - Ir para a Loja Patonica (comprar/vender ingredientes)\n");
     printf("  'f' - Finalizar o dia\n");
     printf("  'q' - Sair do jogo\n\n");
     printf(".....................\n\n");
@@ -204,10 +187,6 @@ void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador) {
     printf("--------------------------------------------------\n");
 }
 
-/**
- * @brief Obtém um comando de caractere do usuário.
- * @return O caractere digitado pelo usuário.
- */
 char ui_obter_comando() {
     char ch;
     printf("Digite um comando: ");
@@ -222,47 +201,29 @@ int ui_obter_id_ingrediente() {
     return id;
 }
 
-/**
- * @brief Pausa a execução e aguarda o usuário pressionar Enter para continuar.
- */
 void ui_pressionar_enter_para_continuar() {
     printf("\nPressione Enter para continuar...");
     while(getchar() != '\n');
     getchar();
 }
 
-/**
- * @brief Exibe uma mensagem informando que um pedido está sendo preparado.
- * @param id O ID do pedido que está sendo preparado.
- */
+
 void ui_mensagem_preparando_pedido(int id) {
     
 }
 
-/**
- * @brief Exibe uma mensagem informando que não há pedidos na fila.
- */
 void ui_mensagem_sem_pedidos() {
     printf("\nNao ha pedidos na fila para preparar!\n");
 }
 
-/**
- * @brief Exibe uma mensagem informando que novos clientes estão sendo gerados.
- */
 void ui_mensagem_gerando_clientes() {
     printf("\nGerando nova fila de clientes...\n");
 }
 
-/**
- * @brief Exibe uma mensagem informando que novos pedidos estão sendo gerados.
- */
 void ui_mensagem_gerando_pedidos() {
     printf("\nGerando novos pedidos...\n");
 }
 
-/**
- * @brief Exibe uma mensagem de erro para um comando não reconhecido.
- */
 void ui_mensagem_comando_invalido() {
     printf("\nComando nao reconhecido.\n");
 }
@@ -275,17 +236,72 @@ void ui_mensagem_ingrediente_sem_estoque() {
     printf("\nIngrediente sem estoque!\n");
 }
 
-/**
- * @brief Exibe uma mensagem de despedida ao sair do jogo.
- */
 void ui_mensagem_saindo() {
     printf("\nSaindo do Pato Burguer...\n");
 }
 
+
+
 void ui_exibir_resultado_validacao(int erros, float penalidade_total, float preco_final) {
+
     printf("\n--- RESULTADO DO PREPARO ---\n");
+
     printf("Erros na montagem: %d\n", erros);
+
     printf("Penalidade total: R$%.2f\n", penalidade_total);
+
     printf("Valor final do pedido: R$%.2f\n", preco_final);
+
     printf("--------------------------------\n");
+
+}
+
+
+
+void ui_iniciar_tela_venda(const Ingrediente ingredientes[], int num_ingredientes) {
+
+    ui_limpar_tela();
+
+    printf("............................\n");
+
+    printf("PATOBURGUER - VENDA DE INGREDIENTES\n");
+
+    printf("Seu estoque atual:\n");
+
+    ui_mostrar_estoque(ingredientes, num_ingredientes); // Reutiliza a função de exibição de estoque
+
+    printf("............................\n\n");
+
+    printf("Digite o ID do ingrediente que deseja vender e a quantidade.\n");
+
+    printf("Digite '0' para voltar.\n");
+
+}
+
+
+
+int ui_pedir_id_ingrediente_venda() {
+
+    int id;
+
+    printf("> ID do ingrediente para vender: ");
+
+    scanf("%d", &id);
+
+    return id;
+
+}
+
+
+
+int ui_pedir_quantidade_venda() {
+
+    int qtd;
+
+    printf("> Quantidade: ");
+
+    scanf("%d", &qtd);
+
+    return qtd;
+
 }
