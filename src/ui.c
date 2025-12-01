@@ -272,7 +272,7 @@ void ui_iniciar_tela_venda(const Ingrediente ingredientes[], int num_ingrediente
 
     printf("Seu estoque atual:\n");
 
-    ui_mostrar_estoque(ingredientes, num_ingredientes); // Reutiliza a função de exibição de estoque
+    ui_mostrar_estoque(ingredientes, num_ingredientes);
 
     printf("............................\n\n");
 

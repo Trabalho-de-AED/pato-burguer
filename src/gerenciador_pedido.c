@@ -1,4 +1,4 @@
-#include <windows.h> // Para a função Sleep()
+#include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -118,10 +118,10 @@ int pedido_manager_processar_proximo_pedido() {
             return 0;
         }
 
-        ui_iniciar_tela_montagem(hamburguer_gabarito, true); // Mostrar a receita
-        Sleep(TEMPO_EXIBICAO_RECEITA_SEGUNDOS * 1000); // Pausar
-        ui_limpar_tela(); // Limpar a tela
-        ui_iniciar_tela_montagem(hamburguer_gabarito, false); // Mostrar apenas o cabeçalho e instruções
+        ui_iniciar_tela_montagem(hamburguer_gabarito, true);
+        Sleep(TEMPO_EXIBICAO_RECEITA_SEGUNDOS * 1000);
+        ui_limpar_tela();
+        ui_iniciar_tela_montagem(hamburguer_gabarito, false);
 
         PilhaIngredientes* pilha_jogador = criar_pilha_ingredientes();
         int id_ingrediente_escolhido;

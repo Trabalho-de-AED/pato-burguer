@@ -1,7 +1,7 @@
 #ifndef UI_H
 #define UI_H
 
-#include <stdbool.h> // Adicionado para usar o tipo bool
+#include <stdbool.h>
 
 #include "caixa.h"
 #include "fila.h"
@@ -56,8 +56,6 @@ void ui_mensagem_ingrediente_sem_estoque();
 void ui_mensagem_saindo();
 
 
-
-// Funções para a interface de venda
 
 void ui_iniciar_tela_venda(const Ingrediente ingredientes[], int num_ingredientes);
 

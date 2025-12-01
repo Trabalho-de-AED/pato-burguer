@@ -75,10 +75,10 @@ int main() {
                 do {
                     ui_mostrar_loja(&loja_de_ingredientes, get_saldo_caixa());
                     opcao_loja = ui_obter_comando();
-                    ui_limpar_tela(); // Limpar a tela após o comando
+                    ui_limpar_tela();
 
                     switch (opcao_loja) {
-                        case 'c': { // Comprar ingrediente
+                        case 'c': {
                             int id_compra, qtd_compra;
                             printf("--- MODO COMPRA ---\n");
                             printf("Digite o ID do ingrediente e a quantidade (ex: 1 10).\n");
@@ -91,9 +91,9 @@ int main() {
                             ui_pressionar_enter_para_continuar();
                             break;
                         }
-                        case 'v': { // Vender ingrediente
+                        case 'v': { 
                             int id_venda, qtd_venda;
-                            ui_iniciar_tela_venda(ingredientes, MAX_INGREDIENTES); // Exibe estoque para venda
+                            ui_iniciar_tela_venda(ingredientes, MAX_INGREDIENTES);
                             id_venda = ui_pedir_id_ingrediente_venda();
                             if (id_venda != 0) {
                                 qtd_venda = ui_pedir_quantidade_venda();
@@ -104,7 +104,7 @@ int main() {
                             ui_pressionar_enter_para_continuar();
                             break;
                         }
-                        case 's': // Sair da loja
+                        case 's': 
                             printf("Saindo da loja...\n");
                             break;
                         default:
