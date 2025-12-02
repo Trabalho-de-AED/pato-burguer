@@ -156,24 +156,28 @@ void ui_mostrar_ajuda() {
     printf(".....................\n\n");
 }
 
-void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito) {
+void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito, bool mostrar_receita) {
     ui_limpar_tela();
     printf("........................................\n");
     printf("..     TELA DE MONTAGEM DE PEDIDO     ..\n");
     printf("........................................\n\n");
     printf("HAMBURGUER A SER MONTADO: %s\n\n", hamburguer_get_nome(hamburguer_gabarito));
-    printf("RECEITA (Ingredientes Necessários):\n");
 
-    Pilha copia_receita = hamburguer_gabarito->ingredientes;
-    int ing_id;
-    while(pop(&copia_receita, &ing_id)) {
-        Ingrediente* ing = buscar_ingrediente_por_id(ing_id);
-        if (ing != NULL) {
-            printf("  ID: %d - %s\n", ingrediente_get_id(ing), ingrediente_get_nome(ing));
+    if (mostrar_receita) {
+        printf("RECEITA (Ingredientes Necessários):\n");
+
+        Pilha copia_receita = hamburguer_gabarito->ingredientes;
+        int ing_id;
+        while(pop(&copia_receita, &ing_id)) {
+            Ingrediente* ing = buscar_ingrediente_por_id(ing_id);
+            if (ing != NULL) {
+                printf("  ID: %d - %s\n", ingrediente_get_id(ing), ingrediente_get_nome(ing));
+            }
         }
+        printf("\n----------------------------------------\n");
     }
-    printf("\n----------------------------------------\n");
-    printf("Digite o ID do ingrediente para adicionar à pilha.\n");
+    
+    printf("Digite o ID do ingrediente para adicionar a pilha.\n");
     printf("Digite '0' para finalizar a montagem.\n");
     printf("----------------------------------------\n");
 }
@@ -268,7 +272,7 @@ void ui_iniciar_tela_venda(const Ingrediente ingredientes[], int num_ingrediente
 
     printf("Seu estoque atual:\n");
 
-    ui_mostrar_estoque(ingredientes, num_ingredientes); // Reutiliza a função de exibição de estoque
+    ui_mostrar_estoque(ingredientes, num_ingredientes);
 
     printf("............................\n\n");
 
