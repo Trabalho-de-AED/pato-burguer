@@ -45,7 +45,7 @@ int comprar_ingrediente(int id_ingrediente, int quantidade) {
     Ingrediente* ingrediente_estoque = buscar_ingrediente_por_id(id_ingrediente);
     if (ingrediente_estoque == NULL) {
         printf("Erro: Ingrediente nao encontrado no estoque principal.\n");
-        atualizar_caixa(custo_total); // Devolve o dinheiro
+        atualizar_caixa(custo_total);
         return 0; 
     }
 
