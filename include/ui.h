@@ -51,7 +51,7 @@ void ui_mensagem_comando_invalido();
 void ui_mensagem_id_invalido();
 
 void ui_mensagem_ingrediente_sem_estoque();
-
+void ui_mostrar_logo_grande();
 
 void ui_mensagem_saindo();
 
@@ -63,6 +63,9 @@ int ui_pedir_id_ingrediente_venda();
 
 int ui_pedir_quantidade_venda();
 
+void ui_menu_comprar(int* id, int* qtd);
 
+void ui_mensagem_compra_sucesso(int qtd, float custo);
+void ui_mensagem_compra_erro_saldo();
 
 #endif
