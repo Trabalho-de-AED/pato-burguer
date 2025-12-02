@@ -151,6 +151,7 @@ void ui_mostrar_ajuda() {
     printf("  'c' - Atender proximo cliente\n");
     printf("  'p' - Preparar proximo pedido\n");
     printf("  'l' - Ir para a Loja Patonica (comprar/vender ingredientes)\n");
+    printf("  'r' - Exibir relatorio de consumo\n");
     printf("  'f' - Finalizar o dia\n");
     printf("  'q' - Sair do jogo\n\n");
     printf(".....................\n\n");

@@ -11,6 +11,7 @@
 #include "ui.h"
 #include "pilha_ingredientes.h"
 #include "caixa.h"
+#include "controle_consumo.h"
 
 
 static int proximo_id_pedido = 1;
@@ -129,6 +130,7 @@ int pedido_manager_processar_proximo_pedido() {
                 if (ing_escolhido != NULL) {
                     if (ingrediente_get_quantidade(ing_escolhido) > 0) {
                         ingrediente_diminuir_estoque(ing_escolhido, 1);
+                        registrar_consumo_diario(ingrediente_get_id(ing_escolhido), ingrediente_get_nome(ing_escolhido), 1);
                         empilhar_ingrediente(pilha_jogador, *ing_escolhido);
                         printf("Adicionado: %s\n", ingrediente_get_nome(ing_escolhido));
                     } else {
