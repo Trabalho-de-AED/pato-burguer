@@ -35,6 +35,7 @@ int main() {
 
     do {
         ui_limpar_tela();
+        ui_mostrar_logo_grande();
         ui_mostrar_status();
         ui_mostrar_fila_clientes(fila_de_clientes);
         ui_mostrar_pedidos(&filaPedidos);
@@ -78,11 +79,17 @@ int main() {
                     switch (opcao_loja) {
                         case 'c': {
                             int id_compra, qtd_compra;
-                            printf("--- MODO COMPRA ---\nDigite o ID do ingrediente e a quantidade (ex: 1 10).\nDigite 0 0 para voltar.\n> ");
-                            scanf("%d %d", &id_compra, &qtd_compra);
+                            
+                            ui_menu_comprar(&id_compra, &qtd_compra);
+
                             if (id_compra != 0 && qtd_compra > 0) {
-                                comprar_ingrediente(id_compra, qtd_compra);
+                                if(comprar_ingrediente(id_compra, qtd_compra)) {
+                                    ui_mensagem_compra_sucesso(qtd_compra, 0.0);
+                                } else {
+                                    ui_mensagem_compra_erro_saldo();
+                                }
                             }
+                            
                             ui_pressionar_enter_para_continuar();
                             break;
                         }
