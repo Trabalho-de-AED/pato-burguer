@@ -21,14 +21,12 @@
 int main() {
     srand(time(NULL));
 
-    // Inicialização dos módulos
     inicializar_caixa();
     inicializa_dados();
     pedido_manager_inicializar_pedidos();
     inicializar_consumo_diario();
 
-    // Inicialização do relatório de consumo (apenas em memória)
-    ArvConsumo* arvore_consumo = criar_arvore_consumo();
+    ArvAVL* arvore_consumo = criarAVL();
 
     FilaClientes* fila_de_clientes = criar_fila_clientes();
     gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA);
@@ -126,16 +124,15 @@ int main() {
                         listar_consumo_alfabeticamente(arvore_consumo);
                         break;
                     case '2':
-                        gerar_ranking_consumo(arvore_consumo);
+                        gerarRnkConsumo(arvore_consumo);
                         break;
                     default:
-                        break; // Volta ao menu principal
+                        break;
                 }
                 ui_pressionar_enter_para_continuar();
                 break;
             }
             case 'f': {
-                // Processa o fim do dia
                 int num_consumidos = 0;
                 const ConsumoDiario* consumos = get_consumo_do_dia(&num_consumidos);
 
@@ -144,10 +141,9 @@ int main() {
                     inserir_ou_atualizar_consumo(arvore_consumo, consumos[i].nome, consumos[i].quantidade);
                 }
                 
-                // Prepara para o próximo dia
                 avancarDia();
                 inicializar_consumo_diario();
-                gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA); // Novos clientes para o novo dia
+                gerar_clientes_na_fila(fila_de_clientes, CLIENTES_POR_DIA); 
                 ui_pressionar_enter_para_continuar();
                 break;
             }
@@ -157,7 +153,7 @@ int main() {
                     printf("Voce faliu! O Pato-Burguer fechou as portas.\n");
                 }
                 printf("\n--- SAINDO DO JOGO ---\n");
-                gerar_ranking_consumo(arvore_consumo);
+                gerarRnkConsumo(arvore_consumo);
                 ui_pressionar_enter_para_continuar();
                 ui_mensagem_saindo();
                 break;
@@ -167,12 +163,11 @@ int main() {
         }
     } while(ch != 'q');
 
-    // Limpeza de memória
     if (fila_de_clientes != NULL) {
         destruir_fila_clientes(fila_de_clientes);
     }
     destruir_loja(&loja_de_ingredientes);
-    liberar_arvore_consumo(arvore_consumo); // Libera a árvore de consumo
+    liberaAVL(arvore_consumo);
 
     return 0;
 }

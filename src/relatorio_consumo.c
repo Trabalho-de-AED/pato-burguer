@@ -1,92 +1,84 @@
 #include "../include/relatorio_consumo.h"
-#include <stdlib.h> // Para abs
+#include <stdlib.h>
 
-// --- Funções Auxiliares da AVL ---
 
-// Retorna a altura de um nó
-int alt_no(NO_Consumo* no) {
+static int alt_NO(NO* no) {
     if (no == NULL) return -1;
     return no->alt;
 }
 
-// Retorna o maior de dois inteiros
-int maior(int x, int y) {
+static int maior(int x, int y) {
     return (x > y) ? x : y;
 }
 
-// Calcula o fator de balanceamento de um nó
-int fb_no(NO_Consumo* no) {
+static int fb_NO(NO* no) {
     if (no == NULL) return 0;
-    return abs(alt_no(no->esq) - alt_no(no->dir));
+    return abs(alt_NO(no->esq) - alt_NO(no->dir));
 }
 
-// --- Rotações ---
-
-void RotacaoLL(ArvConsumo* raiz) {
-    NO_Consumo* no;
+static void RotacaoLL(ArvAVL* raiz) {
+    NO* no;
     no = (*raiz)->esq;
     (*raiz)->esq = no->dir;
     no->dir = *raiz;
-    (*raiz)->alt = maior(alt_no((*raiz)->esq), alt_no((*raiz)->dir)) + 1;
-    no->alt = maior(alt_no(no->esq), (*raiz)->alt) + 1;
+    (*raiz)->alt = maior(alt_NO((*raiz)->esq), alt_NO((*raiz)->dir)) + 1;
+    no->alt = maior(alt_NO(no->esq), (*raiz)->alt) + 1;
     *raiz = no;
 }
 
-void RotacaoRR(ArvConsumo* raiz) {
-    NO_Consumo* no;
+static void RotacaoRR(ArvAVL* raiz) {
+    NO* no;
     no = (*raiz)->dir;
     (*raiz)->dir = no->esq;
     no->esq = *raiz;
-    (*raiz)->alt = maior(alt_no((*raiz)->esq), alt_no((*raiz)->dir)) + 1;
-    no->alt = maior(alt_no(no->dir), (*raiz)->alt) + 1;
+    (*raiz)->alt = maior(alt_NO((*raiz)->esq), alt_NO((*raiz)->dir)) + 1;
+    no->alt = maior(alt_NO(no->dir), (*raiz)->alt) + 1;
     *raiz = no;
 }
 
-void RotacaoLR(ArvConsumo* raiz) {
+static void RotacaoLR(ArvAVL* raiz) {
     RotacaoRR(&(*raiz)->esq);
     RotacaoLL(raiz);
 }
 
-void RotacaoRL(ArvConsumo* raiz) {
+static void RotacaoRL(ArvAVL* raiz) {
     RotacaoLL(&(*raiz)->dir);
     RotacaoRR(raiz);
 }
 
-// --- Funções Principais ---
-
-ArvConsumo* criar_arvore_consumo() {
-    ArvConsumo* raiz = (ArvConsumo*)malloc(sizeof(ArvConsumo));
+ArvAVL* criarAVL() {
+    ArvAVL* raiz = (ArvAVL*)malloc(sizeof(ArvAVL));
     if (raiz != NULL) {
         *raiz = NULL;
     }
     return raiz;
 }
 
-void libera_no_consumo(NO_Consumo* no) {
+void liberaNO(NO* no) {
     if (no == NULL) return;
-    libera_no_consumo(no->esq);
-    libera_no_consumo(no->dir);
+    liberaNO(no->esq);
+    liberaNO(no->dir);
     free(no);
 }
 
-void liberar_arvore_consumo(ArvConsumo* raiz) {
+void liberaAVL(ArvAVL* raiz) {
     if (raiz == NULL) return;
-    libera_no_consumo(*raiz);
+    liberaNO(*raiz);
     free(raiz);
 }
 
-int esta_vazia_arvore_consumo(ArvConsumo* raiz) {
+int estah_vaziaAVL(ArvAVL* raiz) {
     if (raiz == NULL) return 1;
     if (*raiz == NULL) return 1;
     return 0;
 }
 
-int inserir_ou_atualizar_consumo(ArvConsumo* raiz, const char* nome, int quantidade) {
+int inserir_ou_atualizar_consumo(ArvAVL* raiz, const char* nome, int quantidade) {
     if (raiz == NULL) return 0;
 
     int res;
-    if (*raiz == NULL) { // Árvore vazia ou nó folha
-        NO_Consumo* novo = (NO_Consumo*)malloc(sizeof(NO_Consumo));
+    if (*raiz == NULL) {
+        NO* novo = (NO*)malloc(sizeof(NO));
         if (novo == NULL) return 0;
 
         strcpy(novo->dados.nome, nome);
@@ -98,12 +90,12 @@ int inserir_ou_atualizar_consumo(ArvConsumo* raiz, const char* nome, int quantid
         return 1;
     }
 
-    NO_Consumo* atual = *raiz;
+    NO* atual = *raiz;
     int cmp = strcmp(nome, atual->dados.nome);
 
-    if (cmp < 0) { // Inserir na sub-árvore esquerda
+    if (cmp < 0) {
         if ((res = inserir_ou_atualizar_consumo(&(atual->esq), nome, quantidade)) == 1) {
-            if (fb_no(atual) >= 2) {
+            if (fb_NO(atual) >= 2) {
                 if (strcmp(nome, (*raiz)->esq->dados.nome) < 0) {
                     RotacaoLL(raiz);
                 } else {
@@ -111,9 +103,9 @@ int inserir_ou_atualizar_consumo(ArvConsumo* raiz, const char* nome, int quantid
                 }
             }
         }
-    } else if (cmp > 0) { // Inserir na sub-árvore direita
+    } else if (cmp > 0) {
         if ((res = inserir_ou_atualizar_consumo(&(atual->dir), nome, quantidade)) == 1) {
-            if (fb_no(atual) >= 2) {
+            if (fb_NO(atual) >= 2) {
                 if (strcmp(nome, (*raiz)->dir->dados.nome) > 0) {
                     RotacaoRR(raiz);
                 } else {
@@ -121,19 +113,19 @@ int inserir_ou_atualizar_consumo(ArvConsumo* raiz, const char* nome, int quantid
                 }
             }
         }
-    } else { // Nó já existe, apenas atualiza a quantidade
+    } else {
         atual->dados.quantidade += quantidade;
-        return 2; // Indica que foi uma atualização
+        return 2; 
     }
 
-    atual->alt = maior(alt_no(atual->esq), alt_no(atual->dir)) + 1;
+    atual->alt = maior(alt_NO(atual->esq), alt_NO(atual->dir)) + 1;
     return res;
 }
 
-IngredienteConsumido* buscar_consumo(ArvConsumo* raiz, const char* nome) {
+IngredienteConsumido* buscar_consumo(ArvAVL* raiz, const char* nome) {
     if (raiz == NULL || *raiz == NULL) return NULL;
 
-    NO_Consumo* atual = *raiz;
+    NO* atual = *raiz;
     while (atual != NULL) {
         int cmp = strcmp(nome, atual->dados.nome);
         if (cmp == 0) {
@@ -145,57 +137,55 @@ IngredienteConsumido* buscar_consumo(ArvConsumo* raiz, const char* nome) {
             atual = atual->dir;
         }
     }
-    return NULL; // Não encontrado
+    return NULL;
 }
 
-void _listar_in_order(ArvConsumo raiz) {
+void listarOrdem(ArvAVL raiz) {
     if (raiz == NULL) return;
-    _listar_in_order(raiz->esq);
+    listarOrdem(raiz->esq);
     printf("  - %-20s | Quantidade: %d\n", raiz->dados.nome, raiz->dados.quantidade);
-    _listar_in_order(raiz->dir);
+    listarOrdem(raiz->dir);
 }
 
-void listar_consumo_alfabeticamente(ArvConsumo* raiz) {
-    if (esta_vazia_arvore_consumo(raiz)) {
+void listar_consumo_alfabeticamente(ArvAVL* raiz) {
+    if (estah_vaziaAVL(raiz)) {
         printf("Nenhum ingrediente consumido ainda.\n");
         return;
     }
-    printf("\n--- Relatorio de Consumo (Ordem Alfabetica) ---\\n");
-    _listar_in_order(*raiz);
+    printf("\n--- Relatorio de Consumo (Ordem Alfabetica) ---\n");
+    listarOrdem(*raiz);
     printf("-------------------------------------------------\n");
 }
 
-// --- Funções de Ranking ---
-
-void _contar_nos(ArvConsumo raiz, int* count) {
+void contarNOs(ArvAVL raiz, int* count) {
     if (raiz == NULL) return;
     (*count)++;
-    _contar_nos(raiz->esq, count);
-    _contar_nos(raiz->dir, count);
+    contarNOs(raiz->esq, count);
+    contarNOs(raiz->dir, count);
 }
 
-void _preencher_array(ArvConsumo raiz, IngredienteConsumido* array, int* index) {
+void preencherArry(ArvAVL raiz, IngredienteConsumido* array, int* index) {
     if (raiz == NULL) return;
-    _preencher_array(raiz->esq, array, index);
+    preencherArry(raiz->esq, array, index);
     array[*index] = raiz->dados;
     (*index)++;
-    _preencher_array(raiz->dir, array, index);
+    preencherArry(raiz->dir, array, index);
 }
 
 int comparar_ingredientes(const void* a, const void* b) {
     IngredienteConsumido* ingA = (IngredienteConsumido*)a;
     IngredienteConsumido* ingB = (IngredienteConsumido*)b;
-    return ingB->quantidade - ingA->quantidade; // Ordem decrescente
+    return ingB->quantidade - ingA->quantidade; 
 }
 
-void gerar_ranking_consumo(ArvConsumo* raiz) {
-    if (esta_vazia_arvore_consumo(raiz)) {
+void gerarRnkConsumo(ArvAVL* raiz) {
+    if (estah_vaziaAVL(raiz)) {
         printf("Nenhum ingrediente para ranquear.\n");
         return;
     }
 
     int total_nos = 0;
-    _contar_nos(*raiz, &total_nos);
+    contarNOs(*raiz, &total_nos);
     if(total_nos == 0) return;
 
     IngredienteConsumido* ranking_array = (IngredienteConsumido*)malloc(total_nos * sizeof(IngredienteConsumido));
@@ -205,7 +195,7 @@ void gerar_ranking_consumo(ArvConsumo* raiz) {
     }
 
     int index = 0;
-    _preencher_array(*raiz, ranking_array, &index);
+    preencherArry(*raiz, ranking_array, &index);
 
     qsort(ranking_array, total_nos, sizeof(IngredienteConsumido), comparar_ingredientes);
 
