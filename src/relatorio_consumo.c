@@ -2,16 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#define RESET   "\x1b[0m"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define WHITE   "\x1b[37m"
-#define BOLD    "\x1b[1m"
+#include "dados.h"
 
 
 static int alt_NO(NO* no) {
@@ -250,9 +241,18 @@ void gerarRnkConsumo(ArvAVL* raiz) {
         char* cor_pos = RESET;
         char* medalha = " ";
         
-        if (i == 0) { cor_pos = YELLOW BOLD; medalha = "*"; }
-        else if (i == 1) { cor_pos = CYAN BOLD; medalha = "**"; }
-        else if (i == 2) { cor_pos = MAGENTA BOLD; medalha = "***"; }
+        if (i == 0) 
+        { 
+            cor_pos = YELLOW BOLD; 
+            medalha = "*"; 
+        }
+        else if (i == 1) { 
+            cor_pos = 
+            CYAN BOLD; medalha = "**"; }
+        else if (i == 2) 
+        { 
+            cor_pos = 
+            MAGENTA BOLD; medalha = "***"; }
 
         printf(" %s%s%02d.%s | %-20s | " BOLD "%3d" RESET " un.\n", 
                cor_pos, medalha, i + 1, RESET, 

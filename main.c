@@ -20,16 +20,7 @@
 
 #define CLIENTES_POR_DIA 10
 
-#define RESET   "\x1b[0m"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define WHITE   "\x1b[37m"
-#define BOLD    "\x1b[1m"
-#define BG_BLUE "\x1b[44m"
+
 
 int main() {
     srand(time(NULL) ^ GetCurrentProcessId());
@@ -51,7 +42,7 @@ int main() {
         if (verificar_falencia()) {
             ui_limpar_tela();
             ui_tela_falencia();
-            printf("\nPressione [ENTER] para aceitar seu destino...");
+            printf("\nPressione enter para aceitar seu destino...");
             while(getchar() != '\n');
             getchar();
             ch = 'q';

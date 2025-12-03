@@ -5,16 +5,31 @@
 #include <string.h>
 #include <stdio.h>
 
-Hamburguer criar_hamburguer(int id, const char* nome, float preco, const int* ing_ids, int qtd) {
+#define MARGEM_LUCRO_BALANCEAMENTO 1.4f
+
+Hamburguer criar_hamburguer(int id, const char* nome, const int* ing_ids, int qtd) {
     Hamburguer h;
     h.id = id;
     strncpy(h.nome, nome, sizeof(h.nome));
     h.nome[sizeof(h.nome)-1] = '\0'; 
-    h.preco_venda = preco;
     inicializarPilha(&h.ingredientes);
     for(int i=0;i<qtd;i++){
         push(&h.ingredientes, ing_ids[i]);
     }
+
+    float custo_ingredientes = 0.0f;
+    Pilha* copia_ingredientes = pilha_duplicar(&h.ingredientes);
+    int id_ing;
+    while(pop(copia_ingredientes, &id_ing)) {
+        Ingrediente* ing = buscar_ingrediente_por_id(id_ing);
+        if (ing) {
+            custo_ingredientes += ingrediente_get_preco_compra(ing);
+        }
+    }
+    free(copia_ingredientes);
+    
+    h.preco_venda = custo_ingredientes * MARGEM_LUCRO_BALANCEAMENTO;
+
     return h;
 }
 

@@ -36,18 +36,18 @@ void inicializa_dados() {
     int ids11[] = {1,2,6,8,1};
     int ids12[] = {1,2,3,4,5,6,7,8,9,10,1};
 
-    cardapio[0] = criar_hamburguer(1,"Bit and Bacon",12.0,ids1,4);
-    cardapio[1] = criar_hamburguer(2,"Duck Cheese",13.0,ids2,4);
-    cardapio[2] = criar_hamburguer(3,"Quackteirao",15.0,ids3,5);
-    cardapio[3] = criar_hamburguer(4,"Big Pato",16.0,ids4,6);
-    cardapio[4] = criar_hamburguer(5,"Pato Deluxe",18.0,ids5,7);
-    cardapio[5] = criar_hamburguer(6,"Pato Veggie",14.0,ids6,6);
-    cardapio[6] = criar_hamburguer(7,"Pato Chicken",15.0,ids7,5);
-    cardapio[7] = criar_hamburguer(8,"Quack Bacon",16.0,ids8,5);
-    cardapio[8] = criar_hamburguer(9,"Pato Supreme",20.0,ids9,9);
-    cardapio[9] = criar_hamburguer(10,"Cheesy Duck",14.0,ids10,5);
-    cardapio[10] = criar_hamburguer(11,"Bacon Egg Duck",17.0,ids11,5);
-    cardapio[11] = criar_hamburguer(12,"Pato Especial",22.0,ids12,11);
+    cardapio[0] = criar_hamburguer(1,"Bit and Bacon",ids1,4);
+    cardapio[1] = criar_hamburguer(2,"Duck Cheese",ids2,4);
+    cardapio[2] = criar_hamburguer(3,"Quackteirao",ids3,5);
+    cardapio[3] = criar_hamburguer(4,"Big Pato",ids4,6);
+    cardapio[4] = criar_hamburguer(5,"Pato Deluxe",ids5,7);
+    cardapio[5] = criar_hamburguer(6,"Pato Veggie",ids6,6);
+    cardapio[6] = criar_hamburguer(7,"Pato Chicken",ids7,5);
+    cardapio[7] = criar_hamburguer(8,"Quack Bacon",ids8,5);
+    cardapio[8] = criar_hamburguer(9,"Pato Supreme",ids9,9);
+    cardapio[9] = criar_hamburguer(10,"Cheesy Duck",ids10,5);
+    cardapio[10] = criar_hamburguer(11,"Bacon Egg Duck",ids11,5);
+    cardapio[11] = criar_hamburguer(12,"Pato Especial",ids12,11);
 }
 
 Hamburguer* buscar_hamburguer_por_id(int id) {

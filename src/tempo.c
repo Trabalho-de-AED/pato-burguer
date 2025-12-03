@@ -8,16 +8,7 @@
 #include "../include/caixa.h"
 #include <stdio.h>
 
-#define RESET   "\x1b[0m"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define WHITE   "\x1b[37m"
-#define BOLD    "\x1b[1m"
-#define BG_GREEN "\x1b[42m"
+
 
 const int XP_POR_PEDIDO = 15;
 const float PENALIDADE_SATISFACAO_CLIENTE_NAO_ATENDIDO = 2.5f;
@@ -76,7 +67,7 @@ void avancarDia() {
         media_satisfacao_dia = satisfacao_total_dia / pedidos_concluidos;
         loja_de_ingredientes.satisfacao_media_clientes = (loja_de_ingredientes.satisfacao_media_clientes * 0.8f) + (media_satisfacao_dia * 0.2f);
         
-        printf(BLUE " [*] Satisfacao Média (Hoje):      %3.0f%%" RESET "\n", media_satisfacao_dia);
+        printf(BLUE " [*] Satisfacao Media (Hoje):      %3.0f%%" RESET "\n", media_satisfacao_dia);
     }
 
     int clientes_nao_atendidos = (filaPedidos.fim - filaPedidos.ini + MAX) % MAX;
@@ -138,7 +129,7 @@ void avancarDia() {
     caixa_iniciar_dia();
     pedido_manager_inicializar_pedidos();
 
-    printf(CYAN "\n>>> Pressione [ENTER] para iniciar o dia %d..." RESET, dia_atual);
+    printf(CYAN "\n>>> Pressione enter para iniciar o dia %d..." RESET, dia_atual);
     
     while(getchar() != '\n'); 
     getchar();

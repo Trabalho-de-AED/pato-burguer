@@ -15,7 +15,6 @@ typedef struct {
 Hamburguer criar_hamburguer(
     int id, 
     const char* nome, 
-    float preco, 
     const int* ing_ids, 
     int qtd
 );

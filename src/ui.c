@@ -10,16 +10,7 @@
 #include "ListaSE.h" 
 #include "loja.h"    
 
-#define RESET   "\x1b[0m"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define YELLOW  "\x1b[33m"
-#define BLUE    "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
-#define WHITE   "\x1b[37m"
-#define BOLD    "\x1b[1m"
-#define BG_BLUE "\x1b[44m"
+
 
 
 void ui_limpar_tela() {
@@ -67,7 +58,7 @@ void ui_tela_falencia() {
     printf(BG_BLUE WHITE BOLD "      O PATO BURGUER FECHOU AS PORTAS...      " RESET "\n\n");
     
     printf(RED " Motivo: " RESET "Seu saldo ficou negativo.\n");
-    printf(RED " Dica: " RESET "Tente gerenciar melhor a compra de ingredientes!\n\n");
+    printf(RED " Dica: " RESET "Tente gerenciar melhor a compraa de ingredientes!\n\n");
     
     ui_linha_divisoria();
 }
@@ -84,11 +75,14 @@ void ui_cabecalho_relatorio_final() {
     printf(RESET "\n");
 
     ui_linha_divisoria();
-    printf(BOLD " RESUMO DAS VENDAS DO DIA " RESET "\n");
+    printf(BOLD " RESuMO DAS VENDAS DO DIA " RESET "\n");
     printf(" Abaixo estao os itens mais consumidos pelos clientes:\n");
     ui_linha_divisoria();
     printf("\n");
 }
+
+
+
 
 void ui_mostrar_status() {
     ui_linha_divisoria();
@@ -292,7 +286,7 @@ int ui_obter_id_ingrediente() {
 }
 
 void ui_pressionar_enter_para_continuar() {
-    printf("\n" CYAN "Pressione [ENTER] para continuar..." RESET);
+    printf("\n" CYAN "Pressione enter para continuar..." RESET);
     while(getchar() != '\n');
     getchar();
 }
