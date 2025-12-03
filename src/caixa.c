@@ -1,4 +1,6 @@
 #include "../include/caixa.h"
+#include "../include/config.h"
+#include "../include/ui.h"
 
 
 static Caixa g_caixa;
@@ -31,4 +33,13 @@ int debitar_do_caixa(float valor) {
 
 float get_saldo_caixa() {
     return g_caixa.saldoTotal;
+}
+
+int verificar_e_aplicar_limite_saldo_caixa() {
+    if (g_caixa.saldoTotal < CAIXA_LIMITE_SALDO_NEGATIVO) {
+        g_caixa.saldoTotal = 1000.0f;
+        ui_exibir_mensagem_importante("O governo teve que empenhar a sua loja devido a divida alta.");
+        return 1;
+    }
+    return 0;
 }

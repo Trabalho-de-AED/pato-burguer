@@ -387,3 +387,12 @@ void ui_mensagem_compra_sucesso(int qtd, float custo) {
 void ui_mensagem_compra_erro_saldo() {
     printf("\n" RED BOLD "[X] Erro: Saldo insuficiente ou ID invalido!" RESET "\n");
 }
+
+void ui_exibir_mensagem_importante(const char* mensagem) {
+    ui_limpar_tela();
+    ui_linha_divisoria();
+    printf(RED BOLD "\n [!!!] MENSAGEM IMPORTANTE [!!!]\n\n" RESET);
+    printf(RED BOLD " %s\n\n" RESET, mensagem);
+    ui_linha_divisoria();
+    ui_pressionar_enter_para_continuar();
+}

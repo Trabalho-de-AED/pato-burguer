@@ -33,4 +33,6 @@ void listar_consumo_alfabeticamente(ArvAVL* raiz);
 
 void gerarRnkConsumo(ArvAVL* raiz);
 
+int salvar_consumo_para_arquivo(ArvAVL* arvore, const char* filename);
+
 #endif

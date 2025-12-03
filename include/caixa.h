@@ -14,5 +14,6 @@ int debitar_do_caixa(float valor);
 float get_saldo_caixa();
 void caixa_iniciar_dia();
 float caixa_get_lucro_dia();
+int verificar_e_aplicar_limite_saldo_caixa();
 
 #endif 

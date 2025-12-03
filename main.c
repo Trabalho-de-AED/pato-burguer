@@ -159,6 +159,7 @@ int main() {
                 printf(BOLD " SELECIONE O RELATORIO:" RESET "\n");
                 printf(" " CYAN "[1]" RESET " Lista em Ordem Alfabetica\n");
                 printf(" " CYAN "[2]" RESET " Ranking de Mais Consumidos\n");
+                printf(" " GREEN "[3]" RESET " Salvar Relatorio em Arquivo\n");
                 printf(" " RED  "[0]" RESET " Voltar\n\n");
                 
                 printf(BOLD "> Opcao: " RESET);
@@ -171,6 +172,16 @@ int main() {
                     case '2':
                         gerarRnkConsumo(arvore_consumo);
                         break;
+                    case '3': {
+                        const char* filename = "relatorio_consumo.txt";
+
+                        if (salvar_consumo_para_arquivo(arvore_consumo, filename)) {
+                            printf(GREEN "\nRelatorio salvo com sucesso em '%s'!\n" RESET, filename);
+                        } else {
+                            printf(RED "\nErro ao salvar relatorio em '%s'.\n" RESET, filename);
+                        }
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -190,7 +201,13 @@ int main() {
                 }
                 
                 printf(GREEN "[+]" RESET " Calculando penalidades e lucro...\n");
+                
                 avancarDia();
+                if (verificar_e_aplicar_limite_saldo_caixa()) { 
+                    ch = 'q'; 
+                    printf(RED BOLD "\nO jogo sera encerrado devido a falencia." RESET "\n");
+                    ui_pressionar_enter_para_continuar();
+                }
                 
                 printf(GREEN "[+]" RESET " Limpando a cozinha...\n");
                 inicializar_consumo_diario();

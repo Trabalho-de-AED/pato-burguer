@@ -163,6 +163,31 @@ void listarOrdem(ArvAVL raiz) {
     listarOrdem(raiz->dir);
 }
 
+static void escreverOrdem(ArvAVL raiz, FILE* fp) {
+    if (raiz == NULL) return;
+    escreverOrdem(raiz->esq, fp);
+    fprintf(fp, "%-20s : %3d un\n", raiz->dados.nome, raiz->dados.quantidade);
+    escreverOrdem(raiz->dir, fp);
+}
+
+int salvar_consumo_para_arquivo(ArvAVL* raiz, const char* filename) {
+    if (raiz == NULL || *raiz == NULL) {
+        return 0; 
+    }
+
+    FILE* fp = fopen(filename, "w");
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo para escrita");
+        return 0; 
+    }
+
+    fprintf(fp, "RELATORIO DE CONSUMO\n");
+    escreverOrdem(*raiz, fp);
+    fclose(fp);
+    return 1; 
+}
+
+
 void listar_consumo_alfabeticamente(ArvAVL* raiz) {
     if (estah_vaziaAVL(raiz)) {
         printf(YELLOW "\n[!] Nenhum ingrediente consumido ainda.\n" RESET);

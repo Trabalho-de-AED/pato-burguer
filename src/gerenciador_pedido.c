@@ -26,7 +26,7 @@ void pedido_manager_inicializar_pedidos() {
     inicializaFila(&filaPedidosProntos);
 }
 
-static int insereFilaPorHora(Fila* f, Pedido* p) { // Changed to int
+static int insereFilaPorHora(Fila* f, Pedido* p) {
     Fila temp;
     inicializaFila(&temp);
     tp_item ptr;

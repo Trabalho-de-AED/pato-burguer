@@ -71,5 +71,6 @@ void ui_mensagem_compra_erro_saldo();
 
 void ui_tela_falencia();
 void ui_cabecalho_relatorio_final();
+void ui_exibir_mensagem_importante(const char* mensagem);
 
 #endif
