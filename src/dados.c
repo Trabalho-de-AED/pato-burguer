@@ -2,8 +2,6 @@
 #include "config.h"
 #include <stdlib.h>
 
-const float PENALIDADE_POR_ERRO = 0.50f;
-
 Ingrediente ingredientes[MAX_INGREDIENTES];
 
 Hamburguer cardapio[MAX_HAMBURGUERS];
@@ -11,19 +9,19 @@ Hamburguer cardapio[MAX_HAMBURGUERS];
 Loja loja_de_ingredientes;
 
 void inicializa_dados() {
-    ingredientes[0] = criar_ingrediente(1,"Pao",50,1.0,2.0,1,1);
-    ingredientes[1] = criar_ingrediente(2,"Carne",50,2.0,4.0,2,1);
-    ingredientes[2] = criar_ingrediente(3,"Queijo",40,1.5,3.0,1,2);
-    ingredientes[3] = criar_ingrediente(4,"Alface",40,0.5,1.0,1,2);
-    ingredientes[4] = criar_ingrediente(5,"Molho",30,0.2,0.5,1,1);
-    ingredientes[5] = criar_ingrediente(6,"Bacon",30,1.5,3.5,2,2);
-    ingredientes[6] = criar_ingrediente(7,"Tomate",25,0.5,1.0,1,2);
-    ingredientes[7] = criar_ingrediente(8,"Ovo",20,0.7,1.5,1,2);
-    ingredientes[8] = criar_ingrediente(9,"Cebola",20,0.3,0.8,1,2);
-    ingredientes[9] = criar_ingrediente(10,"Pepperoni",15,1.0,2.5,1,3);
+    ingredientes[0] = criar_ingrediente(1,"Pao",10,1.0,2.0,1,1);
+    ingredientes[1] = criar_ingrediente(2,"Carne",10,2.0,4.0,2,1);
+    ingredientes[2] = criar_ingrediente(3,"Queijo",10,1.5,3.0,1,2);
+    ingredientes[3] = criar_ingrediente(4,"Alface",10,0.5,1.0,1,2);
+    ingredientes[4] = criar_ingrediente(5,"Molho",10,0.2,0.5,1,1);
+    ingredientes[5] = criar_ingrediente(6,"Bacon",10,1.5,3.5,2,2);
+    ingredientes[6] = criar_ingrediente(7,"Tomate",10,0.5,1.0,1,2);
+    ingredientes[7] = criar_ingrediente(8,"Ovo",10,0.7,1.5,1,2);
+    ingredientes[8] = criar_ingrediente(9,"Cebola",10,0.3,0.8,1,2);
+    ingredientes[9] = criar_ingrediente(10,"Pepperoni",10,1.0,2.5,1,3);
 
     
-    inicializar_loja(&loja_de_ingredientes);
+    loja_inicializar(&loja_de_ingredientes);
 
     int ids1[] = {1,2,6,1};
     int ids2[] = {1,2,3,1};
@@ -68,4 +66,12 @@ Ingrediente* buscar_ingrediente_por_id(int id) {
         }
     }
     return NULL;
+}
+
+int get_total_ingredientes() {
+    int total = 0;
+    for (int i = 0; i < MAX_INGREDIENTES; i++) {
+        total += ingrediente_get_quantidade(&ingredientes[i]);
+    }
+    return total;
 }

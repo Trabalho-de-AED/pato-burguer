@@ -16,6 +16,8 @@ void inicializa_dados();
 
 Hamburguer* buscar_hamburguer_por_id(int id);
 
+int get_total_ingredientes();
+
 Ingrediente* buscar_ingrediente_por_id(int id);
 
 #endif

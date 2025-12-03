@@ -10,6 +10,7 @@ Pedido criar_pedido(int id, int id_cliente, int id_hamburguer, int hora_pedido) 
     p.hora_pedido = hora_pedido;
     p.erros_montagem = 0;
     p.valor_pago = 0.0f;
+    p.satisfacao = 100.0f;
     return p;
 }
 
@@ -35,4 +36,8 @@ int pedido_get_hora_pedido(const Pedido* p) {
 
 float pedido_get_valor_pago(const Pedido* p) {
     return p->valor_pago;
+}
+
+float pedido_get_satisfacao(const Pedido* p) {
+    return p->satisfacao;
 }

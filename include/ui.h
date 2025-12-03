@@ -12,6 +12,7 @@
 #include "loja.h"
 
 void ui_limpar_tela();
+void ui_linha_divisoria();
 void ui_mostrar_status();
 void ui_mostrar_fila_clientes(const FilaClientes* fila_de_clientes);
 
@@ -67,5 +68,8 @@ void ui_menu_comprar(int* id, int* qtd);
 
 void ui_mensagem_compra_sucesso(int qtd, float custo);
 void ui_mensagem_compra_erro_saldo();
+
+void ui_tela_falencia();
+void ui_cabecalho_relatorio_final();
 
 #endif

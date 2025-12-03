@@ -16,9 +16,11 @@ typedef struct {
     int hora_pedido; 
     int erros_montagem; 
     float valor_pago; 
+    float satisfacao;
 } Pedido;
 
 float pedido_get_valor_pago(const Pedido* p);
+float pedido_get_satisfacao(const Pedido* p);
 
 Pedido criar_pedido(int id, int id_cliente, int id_hamburguer, int hora_pedido);
 

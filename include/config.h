@@ -8,6 +8,4 @@
 #define ESPACAMENTO_COLUNAS 20
 #define TEMPO_EXIBICAO_RECEITA_SEGUNDOS 3
 
-extern const float PENALIDADE_POR_ERRO;
-
 #endif

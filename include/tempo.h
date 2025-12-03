@@ -4,5 +4,6 @@
 extern int dia_atual;
 
 void avancarDia();
+int getDia();
 
 #endif

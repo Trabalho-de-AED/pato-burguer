@@ -26,6 +26,8 @@ const char* hamburguer_get_nome(const Hamburguer* h);
 
 float hamburguer_get_preco_venda(const Hamburguer* h);
 
+float hamburguer_get_custo(const Hamburguer* h);
+
 int hamburguer_get_qtd_ingredientes(const Hamburguer* h);
 
 Pilha hamburguer_get_ingredientes(Hamburguer* h);

@@ -6,6 +6,15 @@ static Caixa g_caixa;
 
 void inicializar_caixa() {
     g_caixa.saldoTotal = 100.0f; 
+    g_caixa.saldo_inicio_dia = 100.0f;
+}
+
+void caixa_iniciar_dia() {
+    g_caixa.saldo_inicio_dia = g_caixa.saldoTotal;
+}
+
+float caixa_get_lucro_dia() {
+    return g_caixa.saldoTotal - g_caixa.saldo_inicio_dia;
 }
 
 
@@ -15,11 +24,8 @@ void atualizar_caixa(float valor) {
 
 
 int debitar_do_caixa(float valor) {
-    if (g_caixa.saldoTotal >= valor) {
-        g_caixa.saldoTotal -= valor;
-        return 1; 
-    }
-    return 0; 
+    g_caixa.saldoTotal -= valor;
+    return 1; 
 }
 
 

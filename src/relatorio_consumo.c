@@ -1,5 +1,17 @@
 #include "../include/relatorio_consumo.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#define RESET   "\x1b[0m"
+#define RED     "\x1b[31m"
+#define GREEN   "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE    "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN    "\x1b[36m"
+#define WHITE   "\x1b[37m"
+#define BOLD    "\x1b[1m"
 
 
 static int alt_NO(NO* no) {
@@ -140,21 +152,26 @@ IngredienteConsumido* buscar_consumo(ArvAVL* raiz, const char* nome) {
     return NULL;
 }
 
+
 void listarOrdem(ArvAVL raiz) {
     if (raiz == NULL) return;
     listarOrdem(raiz->esq);
-    printf("  - %-20s | Quantidade: %d\n", raiz->dados.nome, raiz->dados.quantidade);
+    
+    printf("  " CYAN ">" RESET " %-20s " CYAN ".................." RESET BOLD " %3d" RESET " un\n", 
+           raiz->dados.nome, raiz->dados.quantidade);
+           
     listarOrdem(raiz->dir);
 }
 
 void listar_consumo_alfabeticamente(ArvAVL* raiz) {
     if (estah_vaziaAVL(raiz)) {
-        printf("Nenhum ingrediente consumido ainda.\n");
+        printf(YELLOW "\n[!] Nenhum ingrediente consumido ainda.\n" RESET);
         return;
     }
-    printf("\n--- Relatorio de Consumo (Ordem Alfabetica) ---\n");
+    printf(BLUE BOLD "\n=== RELATORIO DE CONSUMO (A-Z) ===" RESET "\n");
+    printf(BLUE "----------------------------------------------" RESET "\n");
     listarOrdem(*raiz);
-    printf("-------------------------------------------------\n");
+    printf(BLUE "----------------------------------------------" RESET "\n");
 }
 
 void contarNOs(ArvAVL raiz, int* count) {
@@ -180,7 +197,7 @@ int comparar_ingredientes(const void* a, const void* b) {
 
 void gerarRnkConsumo(ArvAVL* raiz) {
     if (estah_vaziaAVL(raiz)) {
-        printf("Nenhum ingrediente para ranquear.\n");
+        printf(YELLOW "\n[!] Nenhum ingrediente para ranquear.\n" RESET);
         return;
     }
 
@@ -190,7 +207,7 @@ void gerarRnkConsumo(ArvAVL* raiz) {
 
     IngredienteConsumido* ranking_array = (IngredienteConsumido*)malloc(total_nos * sizeof(IngredienteConsumido));
     if (ranking_array == NULL) {
-        fprintf(stderr, "Erro de alocação de memória para o ranking.\n");
+        fprintf(stderr, RED "Erro fatal: Falha de alocacao de memoria.\n" RESET);
         return;
     }
 
@@ -199,11 +216,25 @@ void gerarRnkConsumo(ArvAVL* raiz) {
 
     qsort(ranking_array, total_nos, sizeof(IngredienteConsumido), comparar_ingredientes);
 
-    printf("\n--- Ranking de Ingredientes Mais Consumidos ---\n");
+    printf(YELLOW BOLD "\n=== RANKING DOS MAIS CONSUMIDOS ===" RESET "\n");
+    printf(YELLOW "----------------------------------------------" RESET "\n");
+    printf(" Pos | Ingrediente          | Qtd Total \n");
+    printf("-----|----------------------|-----------\n");
+
     for (int i = 0; i < total_nos; i++) {
-        printf("%3d. %-20s | Quantidade: %d\n", i + 1, ranking_array[i].nome, ranking_array[i].quantidade);
+        char* cor_pos = RESET;
+        char* medalha = " ";
+        
+        if (i == 0) { cor_pos = YELLOW BOLD; medalha = "*"; }
+        else if (i == 1) { cor_pos = CYAN BOLD; medalha = "**"; }
+        else if (i == 2) { cor_pos = MAGENTA BOLD; medalha = "***"; }
+
+        printf(" %s%s%02d.%s | %-20s | " BOLD "%3d" RESET " un.\n", 
+               cor_pos, medalha, i + 1, RESET, 
+               ranking_array[i].nome, 
+               ranking_array[i].quantidade);
     }
-    printf("-------------------------------------------------\n");
+    printf(YELLOW "----------------------------------------------" RESET "\n");
 
     free(ranking_array);
 }

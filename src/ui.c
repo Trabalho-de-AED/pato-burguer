@@ -50,16 +50,56 @@ void ui_mostrar_logo_grande() {
 }
 
 
+
+
+
+void ui_tela_falencia() {
+    ui_limpar_tela();
+    
+    printf(RED BOLD);
+    printf("  ______ ___  _     ___ ____   ___  \n");
+    printf(" |  ____/ _ \\| |   |_ _|  _ \\ / _ \\ \n");
+    printf(" | |_  | |_| | |    | || | | | | | |\n");
+    printf(" |  _| |  _  | |___ | || |_| | |_| |\n");
+    printf(" |_|   |_| |_|_____|___|____/ \\___/ \n");
+    printf(RESET "\n");
+
+    printf(BG_BLUE WHITE BOLD "      O PATO BURGUER FECHOU AS PORTAS...      " RESET "\n\n");
+    
+    printf(RED " Motivo: " RESET "Seu saldo ficou negativo.\n");
+    printf(RED " Dica: " RESET "Tente gerenciar melhor a compra de ingredientes!\n\n");
+    
+    ui_linha_divisoria();
+}
+
+void ui_cabecalho_relatorio_final() {
+    ui_limpar_tela();
+    
+    printf(CYAN BOLD);
+    printf("   ___  _____ _      _  _____ ___  ____  ___ ___  \n");
+    printf("  / _ \\| ____| |    / \\|_   _/ _ \\|  _ \\|_ _/ _ \\ \n");
+    printf(" | | | |  _| | |   / _ \\ | || | | | |_) || | | | |\n");
+    printf(" | |_| | |___| |__/ ___ \\| || |_| |  _ < | | |_| |\n");
+    printf("  \\___/|_____|_____/_/   \\_\\_| \\___/|_| \\_\\___\\___/ \n");
+    printf(RESET "\n");
+
+    ui_linha_divisoria();
+    printf(BOLD " RESUMO DAS VENDAS DO DIA " RESET "\n");
+    printf(" Abaixo estao os itens mais consumidos pelos clientes:\n");
+    ui_linha_divisoria();
+    printf("\n");
+}
+
 void ui_mostrar_status() {
     ui_linha_divisoria();
 
     printf(BOLD " STATUS ATUAL \n" RESET);
     
     printf(" " GREEN "Caixa: R$ %6.2f" RESET "   |   ", get_saldo_caixa());
-    printf(YELLOW "Satisfacao: 50%%" RESET "   |   ");
-    printf(MAGENTA "Nivel: 1" RESET "\n");
+    printf(YELLOW "Satisfacao: %.0f%%" RESET "   |   ", loja_get_satisfacao_media(&loja_de_ingredientes));
+    printf(MAGENTA "Nivel: %d" RESET "\n", loja_get_nivel(&loja_de_ingredientes));
     
-    printf(" " CYAN  "Pontuacao: 0" RESET "        |   ");
+    printf(" " CYAN  "XP: %d/%d" RESET "        |   ", loja_de_ingredientes.experiencia_total, loja_de_ingredientes.xp_para_proximo_nivel);
     printf(WHITE "Moedas: 100" RESET "       |   ");
     printf("Tempo: 00:00\n");
     
@@ -229,7 +269,7 @@ void ui_iniciar_tela_montagem(const Hamburguer* hamburguer_gabarito, bool mostra
 }
 
 void ui_exibir_hamburguer_montado(PilhaIngredientes* pilha_jogador) {
-    printf("\n" MAGENTA "--- SEU HAMBURGUER (Topo para Base) ---" RESET "\n");
+    printf("\n" MAGENTA "--- SEU HAMBURGUER  ---" RESET "\n");
     
     Ingrediente ing_temp;
     while (desempilhar_ingrediente(pilha_jogador, &ing_temp)) {
@@ -328,7 +368,7 @@ int ui_pedir_quantidade_venda() {
 }
 
 void ui_menu_comprar(int* id, int* qtd) {
-    ui_linha_divisoria(); // Mantém o contexto da loja em cima
+    ui_linha_divisoria(); 
     
     printf(BG_BLUE WHITE BOLD "           CAIXA - COMPRA DE REPOSICAO           " RESET "\n\n");
     

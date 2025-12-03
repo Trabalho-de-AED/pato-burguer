@@ -13,6 +13,7 @@
 #include "pilha_ingredientes.h"
 #include "caixa.h"
 #include "controle_consumo.h"
+#include "loja.h"
 
 
 static int proximo_id_pedido = 1;
@@ -151,10 +152,18 @@ int pedido_manager_processar_proximo_pedido() {
         
         int erros = contar_erros_montagem(pilha_jogador, hamburguer_gabarito);
         float preco_base = hamburguer_get_preco_venda(hamburguer_gabarito);
-        float penalidade = erros * PENALIDADE_POR_ERRO;
-        float preco_final = preco_base - penalidade;
-        if (preco_final < 0) {
-            preco_final = 0;
+        
+        float percentual_penalidade = obter_percentual_penalidade_por_nivel(loja_get_nivel(&loja_de_ingredientes));
+        float penalidade_por_erro = preco_base * percentual_penalidade;
+        float penalidade_total = erros * penalidade_por_erro;
+        float preco_final = preco_base - penalidade_total;
+
+        if (erros == 0) {
+            pedido_atual->satisfacao = 100.0f;
+        } else if (erros == 1) {
+            pedido_atual->satisfacao = 75.0f;
+        } else {
+            pedido_atual->satisfacao = 50.0f;
         }
 
         atualizar_caixa(preco_final);
@@ -167,7 +176,7 @@ int pedido_manager_processar_proximo_pedido() {
         ui_exibir_hamburguer_montado(pilha_para_exibir);
         destruir_pilha_ingredientes(pilha_para_exibir);
 
-        ui_exibir_resultado_validacao(erros, penalidade, preco_final);
+        ui_exibir_resultado_validacao(erros, penalidade_total, preco_final);
         
         destruir_pilha_ingredientes(pilha_jogador);
         destruir_pilha_ingredientes(pilha_jogador_original);

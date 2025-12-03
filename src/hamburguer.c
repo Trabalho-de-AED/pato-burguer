@@ -1,5 +1,7 @@
 #include "../include/hamburguer.h"
 #include "../include/pilha.h"
+#include "../include/ingrediente.h"
+#include "../include/dados.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -26,6 +28,22 @@ const char* hamburguer_get_nome(const Hamburguer* h) {
 
 float hamburguer_get_preco_venda(const Hamburguer* h) {
     return h->preco_venda;
+}
+
+float hamburguer_get_custo(const Hamburguer* h) {
+    float custo_total = 0.0f;
+    Pilha* copia_ingredientes = pilha_duplicar(&h->ingredientes);
+    
+    int id_ing;
+    while(pop(copia_ingredientes, &id_ing)) {
+        Ingrediente* ing = buscar_ingrediente_por_id(id_ing);
+        if (ing) {
+            custo_total += ingrediente_get_preco_compra(ing);
+        }
+    }
+    
+    free(copia_ingredientes);
+    return custo_total;
 }
 
 int hamburguer_get_qtd_ingredientes(const Hamburguer* h){
