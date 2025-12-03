@@ -100,8 +100,7 @@ void ui_mostrar_status() {
     printf(MAGENTA "Nivel: %d" RESET "\n", loja_get_nivel(&loja_de_ingredientes));
     
     printf(" " CYAN  "XP: %d/%d" RESET "        |   ", loja_de_ingredientes.experiencia_total, loja_de_ingredientes.xp_para_proximo_nivel);
-    printf(WHITE "Moedas: 100" RESET "       |   ");
-    printf("Tempo: 00:00\n");
+    printf("\n");
     
     ui_linha_divisoria();
 }

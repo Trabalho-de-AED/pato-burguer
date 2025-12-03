@@ -110,10 +110,20 @@ int main() {
                             ui_menu_comprar(&id_compra, &qtd_compra);
 
                             if (id_compra != 0 && qtd_compra > 0) {
-                                if(comprar_ingrediente(id_compra, qtd_compra)) {
-                                    ui_mensagem_compra_sucesso(qtd_compra, 0.0);
+                                Ingrediente* ing_comprado = buscar_ingrediente_por_id(id_compra);
+                                if (ing_comprado != NULL) {
+                                    float custo_total = ing_comprado->preco_compra * qtd_compra;
+                                    if (get_saldo_caixa() < custo_total) { 
+                                        ui_mensagem_compra_erro_saldo(); 
+                                    } else {
+                                        if(comprar_ingrediente(id_compra, qtd_compra)) {
+                                            ui_mensagem_compra_sucesso(qtd_compra, custo_total);
+                                        } else {
+                                            ui_mensagem_compra_erro_saldo(); 
+                                        }
+                                    }
                                 } else {
-                                    ui_mensagem_compra_erro_saldo();
+                                    printf(RED BOLD "[!] ERRO:" RESET " Ingrediente nao encontrado. Tente novamente.\n");
                                 }
                             }
                             ui_pressionar_enter_para_continuar();

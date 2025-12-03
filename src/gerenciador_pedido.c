@@ -26,23 +26,38 @@ void pedido_manager_inicializar_pedidos() {
     inicializaFila(&filaPedidosProntos);
 }
 
-static void insereFilaPorHora(Fila* f, Pedido* p) {
+static int insereFilaPorHora(Fila* f, Pedido* p) { // Changed to int
     Fila temp;
     inicializaFila(&temp);
     tp_item ptr;
     int inserido = 0;
+
     while (removeFila(f, &ptr)) {
         Pedido* atual = (Pedido*) ptr;
         if (!inserido && pedido_get_hora_pedido(p) < pedido_get_hora_pedido(atual)) {
-            insereFila(&temp, p);
+            if (!insereFila(&temp, p)) {
+                return 0;
+            }
             inserido = 1;
         }
-        insereFila(&temp, atual);
+        if (!insereFila(&temp, atual)) { 
+            return 0;
+        }
     }
+    
     if (!inserido) {
-        insereFila(&temp, p);
+        if (!insereFila(&temp, p)) {
+            return 0;
+        }
     }
-    *f = temp;
+    inicializaFila(f); 
+    
+    while(removeFila(&temp, &ptr)) {
+        if (!insereFila(f, ptr)) { 
+            return 0; 
+        }
+    }
+    return 1;
 }
 
 void pedido_manager_gerar_pedidos(Pedido pedidos[], int n) {
@@ -51,7 +66,7 @@ void pedido_manager_gerar_pedidos(Pedido pedidos[], int n) {
         int id_hamburguer = rand() % MAX_HAMBURGUERS + 1;
         int hora_pedido = rand() % 24;
         pedidos[i] = criar_pedido(i + 1, id_cliente, id_hamburguer, hora_pedido);
-        insereFila(&filaPedidos, &pedidos[i]);
+        insereFilaPorHora(&filaPedidos, &pedidos[i]);
     }
 }
 
@@ -61,13 +76,14 @@ void cliente_faz_pedido(const Cliente* cliente) {
         perror("Falha ao alocar memória para novo pedido");
         return;
     }
+    int hora_pedido = rand() % 24;
     *novo_pedido = criar_pedido(
         proximo_id_pedido++,
         cliente_get_id(cliente),
         cliente_get_id_hamburguer_preferido(cliente),
-        0
+        hora_pedido 
     );
-    if (!insereFila(&filaPedidos, novo_pedido)) {
+    if (!insereFilaPorHora(&filaPedidos, novo_pedido)) {
         fprintf(stderr, "AVISO: Fila de pedidos está cheia. O pedido do cliente %s foi perdido.\n", cliente_get_nome(cliente));
         free(novo_pedido);
     }
