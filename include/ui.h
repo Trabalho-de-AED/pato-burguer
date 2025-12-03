@@ -10,6 +10,7 @@
 #include "fila_clientes.h"
 #include "pilha_ingredientes.h"
 #include "loja.h"
+#include "relatorio_consumo.h"
 
 void ui_limpar_tela();
 void ui_linha_divisoria();
@@ -69,7 +70,7 @@ void ui_menu_comprar(int* id, int* qtd);
 void ui_mensagem_compra_sucesso(int qtd, float custo);
 void ui_mensagem_compra_erro_saldo();
 
-void ui_tela_falencia();
+void ui_tela_falencia(ArvAVL* raiz);
 void ui_cabecalho_relatorio_final();
 void ui_exibir_mensagem_importante(const char* mensagem);
 

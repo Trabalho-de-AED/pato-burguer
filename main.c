@@ -41,7 +41,7 @@ int main() {
     do {
         if (verificar_falencia()) {
             ui_limpar_tela();
-            ui_tela_falencia();
+            ui_tela_falencia(arvore_consumo);
             printf("\nPressione enter para aceitar seu destino...");
             while(getchar() != '\n');
             getchar();

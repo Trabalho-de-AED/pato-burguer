@@ -9,7 +9,7 @@
 #include "dados.h"
 #include "ListaSE.h" 
 #include "loja.h"    
-
+#include "relatorio_consumo.h"
 
 
 
@@ -44,7 +44,7 @@ void ui_mostrar_logo_grande() {
 
 
 
-void ui_tela_falencia() {
+void ui_tela_falencia(ArvAVL* raiz) {
     ui_limpar_tela();
     
     printf(RED BOLD);
@@ -61,6 +61,9 @@ void ui_tela_falencia() {
     printf(RED " Dica: " RESET "Tente gerenciar melhor a compraa de ingredientes!\n\n");
     
     ui_linha_divisoria();
+
+    gerarRnkConsumo(raiz);
+    listar_consumo_alfabeticamente(raiz);
 }
 
 void ui_cabecalho_relatorio_final() {
